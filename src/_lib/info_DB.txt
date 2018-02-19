@@ -1,0 +1,22 @@
+================================================================================
+Librairie : DB                          Version : ---
+================================================================================
+
+DB est une classe PHP servant de façade d'échange avec une BDD.
+Auteur : Sébastien ROMMENS pour Sésamath.
+
+Seule la classe est présente dans SACoche.
+Pour infos et documentations (réservé à Sésamath) :
+https://src.sesamath.net/svn/commun/trunk/DB_docs_dev/utilisation_classe_de_connexion.txt
+
+Fin de DB_Manager.class.php un temps adaptée ainsi :
+
+  public function warn() {
+    // trigger_error($this->message, E_USER_WARNING);
+    trigger_error(str_replace(array("\n",'        ','    ','  '),'',print_r($this,true)), E_USER_WARNING);
+  }
+   
+  public function log() {
+    // error_log($this->message);
+    error_log(str_replace(array("\n",'        ','    ','  '),'',print_r($this,true)));
+  }

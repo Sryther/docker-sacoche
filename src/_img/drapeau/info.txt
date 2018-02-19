@@ -1,0 +1,3 @@
+Images à l'origine au format PNG 
+mais la transparence n'était pas bien gérée par FPDF (arrière-plan noir) 
+alors le format GIF a été préféré.

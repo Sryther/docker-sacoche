@@ -1,0 +1,62 @@
+================================================================================
+Librairie : phpCAS                      Version : 1.3.5
+================================================================================
+
+phpCAS est une classe PHP utilisée comme client CAS, pour communiquer avec un serveur CAS.
+
+Seule la classe est présente dans SACoche.
+Pour infos et documentations : https://wiki.jasig.org/display/CASC/phpCAS
+
+========================================
+Traitement des XML invalides
+========================================
+
+phpCAS renvoie des erreurs moches et pas explicites.
+Voir le fichier
+./pages/public_login_SSO.php
+où on tente de mettre en place une surcouche plus explicite et aux couleurs de l'appli.
+
+Reste le problème de nombreuses erreurs type
+PHP Warning:  DOMDocument::loadXML(): AttValue: &quot; or ' expected in Entity
+PHP Warning:  DOMDocument::loadXML(): Couldn't find end of Start Tag font in Entity
+PHP Warning:  DOMDocument::loadXML(): Entity 'eacute' not defined in Entity
+PHP Warning:  DOMDocument::loadXML(): Entity 'egrave' not defined in Entity
+PHP Warning:  DOMDocument::loadXML(): Entity 'nbsp' not defined in Entity
+PHP Warning:  DOMDocument::loadXML(): EntityRef: expecting ';' in Entity
+PHP Warning:  DOMDocument::loadXML(): Input is not proper UTF-8, indicate encoding !
+PHP Warning:  DOMDocument::loadXML(): Opening and ending tag mismatch
+PHP Warning:  DOMDocument::loadXML(): Premature end of data in tag html line 1 in Entity
+PHP Warning:  DOMDocument::loadXML(): attributes construct error in Entityà cause de réponses du genre
+en particulier quand le serveur d'authentification renvoie un XML invalide du style
+<cas:serviceResponse xmlns:cas='http://www.yale.edu/tp/cas'><cas:authenticationFailure code="INVALID_SERVICE">Service https://sacoche.sesamath.net/sacoche/?sso=6317&cookie invalid for the ticket found</cas:authenticationFailure></cas:serviceResponse>
+(qui contient une éperluette non convertie dans l'adresse),
+ce qui remplit les logs PHP en plus de l'affichage à l'utilisateur.
+Pour y remédier, dans le fichier
+./phpCAS/CAS/Client.php
+on a remplacé 4 fois
+!($dom->loadXML(...)
+par
+!(@$dom->loadXML(...)
+(l'erreur demeure interceptée mais elle ne remplit plus les logs PHP)
+Y penser lors de futures mises à jour de la librairie...
+
+========================================
+Fichier de certificats
+========================================
+
+
+Requis pour l'utilisation de phpCAS::setCasServerCACert().
+
+A/ [certificats/cacert.pem] est issu de http://curl.haxx.se/docs/caextract.html
+B/ [certificats/ca-bundle.crt] a été généré par Daniel à partir des certificats de Firefox du dépôt Debian
+ (cf ssl:/sso/_docs_dev/readme_certificat_CAS.php)
+ -> plus en 11/2015 : "j'ai pris la concaténation à jour de ma debian, et ça marche pour tout le monde en étant plus petit"
+
+Très curieusement, seul A fonctionne sur mon PC pour la vérification de certains domaines, alors que B est plus complet.
+Du coup, j'ai généré [certificats/certificats.txt] qui est la concaténation des deux !
+
+En cas de souci avec un ENT, on peut vérifier manuellement la validité de son certificat
+ avec l'un de ces services efficaces et explicatifs :
+https://www.ssllabs.com/ssltest/analyze.html
+https://www.sslshopper.com/ssl-checker.html
+https://ssltools.websecurity.symantec.com/checker/views/certCheck.jsp

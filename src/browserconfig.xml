@@ -1,0 +1,15 @@
+<!-- Ce fichier sert pour Windows 8 (et surement pour Windows Phone), si le visiteur épingle son site sur son interface métro.  -->
+<!-- http://msdn.microsoft.com/en-us/library/ie/dn320426(v=vs.85).aspx  -->
+<?xml version="1.0" encoding="utf-8" ?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo   src="./_img/favicon/microsoft-tile-square-70x70.png" />
+      <square150x150logo src="./_img/favicon/microsoft-tile-square-150x150.png" />
+      <square310x310logo src="./_img/favicon/microsoft-tile-square-310x310.png" />
+      <wide310x150logo   src="./_img/favicon/microsoft-tile-wide-310x150.png" />
+      <TileImage src="./_img/favicon/microsoft-tile-square-144x144.png" />
+      <TileColor>#E6E6FF</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig> 

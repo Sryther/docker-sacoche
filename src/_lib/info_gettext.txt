@@ -1,0 +1,61 @@
+﻿================================================================================
+Librairie : gettext                        Version : 1.0.12
+================================================================================
+
+"gettext" est un format ouvert normé destiné à gérer des traductions.
+http://www.gnu.org/software/gettext/gettext.html
+
+"gettext" est aussi une extension de PHP dédiée à cet usage.
+http://php.net/manual/fr/ref.gettext.php
+
+Mais, à l'usage, des problèmes surviennent :
+- l'extension "gettext" de PHP n'est pas installée sur certains serveurs (< 5%)
+- la constante LC_MESSAGES n'est pas disponible si PHP n'a pas été compilé avec "libintl"
+- les langages utilisés doivent être installés sur le système
+- sous Windows les locales ont des noms différents (fr_FR => fr ; en_US => en ; ...)
+- la doc indique un problème de "collision en utilisation multithread d'Apache" avec setlocale()
+- souci annoncé de mise en cache par Apache des fichiers .mo ("il faut redémarrer Apache après chaque compilation de fichier langue)
+
+"PHP-gettext" est un ensemble de fonctions destinées à pourvoir utiliser gettext sans ces inconvénients.
+https://launchpad.net/php-gettext
+
+J'ai ré-écrit le fichier "gettext.inc.php" (initialement "gettext.inc) afin d'utiliser une classe (avec autoload) plutôt que des fonctions.
+Cela a donné le fichier "Lang.class.php".
+
+Des constantes sont définies dans le _loader.php (dont LC_MESSAGES si besoin, pas pu faire autrement).
+Les appels se font ainsi (après ouverture de session) : "Lang::fonction_gettext_de_la_doc_php()".
+En général pour une traduction simple on utilise l'alias : Lang::_("...").
+
+Modifications apportées manuellement pour PHP 7 car non encore prises en compte au 28/07/2016 :
+https://bugs.launchpad.net/php-gettext/+bug/1522900
+streams.php#52 : function StringReader($str='') => function __construct($str='')
+streams.php#89 : function FileReader($filename) => function __construct($filename)
+streams.php#146 : function CachedFileReader($filename) => function __construct($filename)
+gettext#101 : function gettext_reader($Reader, $enable_cache = true) => function __construct($Reader, $enable_cache = true)
+
+================================================================================
+Fabriquer les fichiers de traduction
+================================================================================
+
+Utiliser le logiciel libre "Poedit".
+- Sous Windows ou Mac, le télécharger sur le site officiel: http://www.poedit.net/download.php
+- Sous Ubuntu, dans le gestionnaire de paquets, rechercher et installer "poedit".
+
+En attendant un tutoriel perso actualisé, voir la vidéo à l'une des adresses suivantes entre 8:50 et 18:00.
+http://www.grafikart.fr/tutoriels/php/internationaliser-site-gettext-104
+http://www.youtube.com/watch?v=e6Fw5p3ezKU
+
+Le code d'une traduction ("locale") comporte
+- 2 lettres minuscules indiquant la langue, norme ISO 639-1 : http://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1
+- puis le caractère underscore ("_") puis
+- 2 lettres majuscules indiquant le pays, norme ISO 3166-2 : http://fr.wikipedia.org/wiki/ISO_3166-2
+Exemples : fr_FR ; en_US ; de_CH ; sr_CS ; ...
+
+Cependant, cela ne couvre pas toutes les langues.
+Par exemple pour le créole réunionnais
+http://fr.wikipedia.org/wiki/Cr%C3%A9ole_r%C3%A9unionnais
+Le code est à prendre dans la norme norme ISO 639-3.
+http://www-01.sil.org/iso639-3/codes.asp
+Ici c'est "rcf" donc "rcf_RE" si on ajoute le pays.
+http://www-01.sil.org/iso639-3/documentation.asp?id=rcf
+Mais il n'est pas connu de Poedit...

@@ -1,0 +1,29 @@
+================================================================================
+Librairie : FirePHPCore                 Version : 0.4.0
+================================================================================
+
+FirePHPCore (http://www.firephp.org/HQ/Install.htm) est une classe PHP servant d'outil de débogage 
+couplée à FirePHP (http://www.firephp.org/ ; https://addons.mozilla.org/en-US/firefox/addon/6149)
+lui même couplé à Firebug (http://getfirebug.com/ ; https://addons.mozilla.org/en-US/firefox/addon/6149)
+utilisable dans Firefox (http://www.mozilla-europe.org/fr).
+
+Pour infos et documentations :
+FR http://code18.blogspot.com/2009/05/deboguer-avec-firephp.html
+US http://sixrevisions.com/web-development/how-to-debug-php-using-firefox-with-firephp/
+
+Utilisé par la classe DB (hors environnement PROD) si mode debug activé.
+
+Attention : le débug des requêtes lourdes occupe la mémoire PHP et peut provoquer des dépassements de memory_limit() trompeurs (car inexistants en PROD).
+Un bouton dans le bandeau permet d'activer ou non le mode debug.
+
+Utilisation dans le code :
+
+if(DEBUG)
+{
+  $firephp->log('Début du programme');  
+  $firephp->info('La condition est fausse...');  
+  $firephp->warn('Possiblement une erreur');  
+  $firephp->error('Exception : ça a planté!');
+  $firephp->trace('You are here!');
+  $firephp->dump('Variable', $variable);
+}

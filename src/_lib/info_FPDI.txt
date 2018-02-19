@@ -1,0 +1,40 @@
+﻿================================================================================
+Librairie : FPDI                        Version : 1.6.1
+Librairie : FPDF_TPL                    Version : 1.2.3
+Extension : PDFMerger                   Version : 1.0 alpha
+================================================================================
+
+FPDI est une classe PHP qui ajoute des fonctionnalités à FPDF.
+
+http://www.setasign.de/products/pdf-php-solutions/fpdi/
+
+Elle utilise FPDF_TPL qui est elle-même une extension de classe de FPDF.
+
+FPDI permet de découper un PDF ou d'en assembler les pages autrement (miniatures, ajout de gabarits...).
+
+Pour simplement assembler ou découper des PDF, PDFMerger (http://pdfmerger.codeplex.com/) peut servir d'interface simplificatrice.
+
+<<< Limitations >>>
+
+Avec la nouvelles fiche brevet de la série professionnelle de janvier 2014, une erreur est survenue :
+"This document probably uses a compression technique which is not supported by the free parser shipped with FPDI. (See https://www.setasign.com/fpdi-pdf-parser for more details)"
+Et ils proposent sur leur site d'acheter 100 € une extension commerciale payante non libre. :(
+Astuce trouvée : ouvrir le PDF avec Inkskape et l'enregistrer en PDF 1.4 au lieu de 1.5 : ensuite ça fonctionne !!!
+Au passage, on en profite sous Inkskape pour arranger un peu ce modèle non conforme (ligne de séparation en trop entre HG et Ed Civ, intitulé "Éducation artistique").
+
+<<< Modifs >>>
+
+Dans fpdi_bridge.php, "class fpdi_bridge extends FPDF" remplacé par "class fpdi_bridge extends PDF" pour bénéficier des méthodes ajoutées.
+
+<<< Correctifs >>>
+
+- It's problem in PDFmerger on line 118, where FPDI returns empty string (which is ok), but Merger interprets it as false. I suggest fix that part or use another way:
+  $fileString = $merger->merge('string',$filename);
+  file_put_contents($filename, $fileString);
+
+<<< Usage >>>
+
+FPDI était utilisé pour les fiches brevet et les conventions ENT-établissement (ouvrir un PDF existant pour y ajouter des informations).
+Désormais, les fiches brevet n'existent plus et les conventions sont générées entièrement en PHP.
+Donc FPDI n'est plus utilisé par SACoche que pour son extension PDFMerger.
+01/04/2017

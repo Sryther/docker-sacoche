@@ -1,0 +1,1501 @@
+/**
+ * @version $Id$
+ * @author Thomas Crespin <thomas.crespin@sesamath.net>
+ * @copyright Thomas Crespin 2009-2015
+ * 
+ * ****************************************************************************************************
+ * SACoche <http://sacoche.sesamath.net> - Suivi d'Acquisitions de Compétences
+ * © Thomas Crespin pour Sésamath <http://www.sesamath.net> - Tous droits réservés.
+ * Logiciel placé sous la licence libre Affero GPL 3 <https://www.gnu.org/licenses/agpl-3.0.html>.
+ * ****************************************************************************************************
+ * 
+ * Ce fichier est une partie de SACoche.
+ * 
+ * SACoche est un logiciel libre ; vous pouvez le redistribuer ou le modifier suivant les termes 
+ * de la “GNU Affero General Public License” telle que publiée par la Free Software Foundation :
+ * soit la version 3 de cette licence, soit (à votre gré) toute version ultérieure.
+ * 
+ * SACoche est distribué dans l’espoir qu’il vous sera utile, mais SANS AUCUNE GARANTIE :
+ * sans même la garantie implicite de COMMERCIALISABILITÉ ni d’ADÉQUATION À UN OBJECTIF PARTICULIER.
+ * Consultez la Licence Publique Générale GNU Affero pour plus de détails.
+ * 
+ * Vous devriez avoir reçu une copie de la Licence Publique Générale GNU Affero avec SACoche ;
+ * si ce n’est pas le cas, consultez : <http://www.gnu.org/licenses/>.
+ * 
+ */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Généralités normatives                                                                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,pre,input,p,blockquote,th,td,img,hr {margin:0;padding:0}
+ol,ul,li {list-style:none}
+table {border-collapse:collapse;border-spacing:0;font-size:100%}
+fieldset,img,hr {border:0}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Personnalisations globales                                                                          */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+html,body{height:100%;width:100%;background:#FFF;font:13px "arial","helvetica","nimbus sans l","liberation sans","freesans","garuda",sans-serif;cursor:default} /* Arial pour windows, Helvetica pour Mac, Nimbus pour Linux, d'autres libres ensuite, et sans-serif en dernier recours (à écrire sans "" car mot clef générique) ; ne pas mettre Verdana ou Deja Vu, trop larges */
+table,select,textarea,input,button,div,kbd{font:100% "arial","helvetica","nimbus sans l","liberation sans","freesans","garuda",sans-serif}
+p, *.p{margin-top:1em;margin-bottom:1em}
+img {vertical-align:middle}
+#aide_en_ligne img , .legende img {vertical-align:bottom;padding:1px 3px;border:1px solid #66F;margin-left:2em;margin-right:3px}
+.legende div {margin:2px 1em}
+.legende span.cadre {font-size:90%;padding:0 3px;border:1px solid #66F;margin-left:2em;margin-right:3px;white-space:nowrap}
+/* td img {vertical-align:baseline} */
+/* label img {vertical-align:text-top} */
+a.anti_h2{padding-left:15px;margin-left:1em;font-size:75%;font-weight:normal;font-variant:normal;letter-spacing:0;background:transparent no-repeat left url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAolBMVEUAAABMlURLlUQlZCFhsFhLlURLlURNlkUgXh1zx2gqaiUjYiAkYyBOl0ZtvmJZplBKkkI+gzgpaSUzdS1BhzpouF1wwmVyxGZxw2UubylsvWFXok44ezKw2alnpl+BwXiWzYxgn1gsbSeNyIIxcyttvmFnuF2QyoZerFQnZiN0tGyn1Z9amVOc0pSq1qJ0s2tqqWJYl1Fks1p4t287gDU2ejGi8UExAAAAHXRSTlMAr9yZyMHJAkBA7MbV6Ky+976sxgncmcbV3OwJydRtN/4AAAB7SURBVBjTY8AJ+NjRBERZEGxOcVVVNXl5fjhfQldWVk9PW4sXKiCmICuvoWGszwpTIaVmBNTPxMYugjAFaAMjqi2MKDxpdjYmBgYZFSUumAirgZyJqaGyIjOULyCnoKCurCzHwwFTIaioo6Kkyc2BMEVYEs0j7EK4fQ0AWWIIILX4+E4AAAAASUVORK5CYII=");} /* puce_actualiser_small */
+a {color:#139;text-decoration:none}a:hover{color:#D41;text-decoration:underline}
+hr {display:block;height:1px;margin:1ex 0;border-top:1px dotted #66F;}
+#aide_en_ligne {margin:1ex 1em}
+em {display:inline;font-style:normal;font-weight:bold;font-variant:small-caps} /* "SACoche" et divers noms propres ou sigles */
+del{text-decoration:line-through;color:#999}
+kbd{display:inline-block;font-size:90%;font-weight:bold;line-height:1.4;margin:1px;padding:1px 5px;color:#333;background-color:#EEE;border-radius:3px;border:1px solid #CCCCCC;box-shadow:0px 1px 0px rgba(0, 0, 0, 0.2),0px 0px 0px 2px white inset;text-shadow:0px 1px 0px white;white-space:nowrap}
+pre{display:inline-block;font-family:monospace;white-space:pre;padding:1ex 2ex;background-color:#DEF}
+audio.prof{vertical-align:middle;width:300px}
+audio.eleve{vertical-align:middle;width:600px}
+.hc{text-align:center} .hg{text-align:left} .hd{text-align:right} .ti{text-indent:3em} .ml{margin-left:3em}
+.i{font-style:italic} .u{text-decoration:underline} .b{font-weight:bold}
+.hide{display:none}
+.t9{font-size:90%}
+.breakafter{page-break-after:always}
+.fd{float:right;margin-right:1em}
+.avant{color:#666;background-color:#FFC;font-size:12px}
+.avant b{color:#333}
+.notnow{color:#666}
+.now{color:#000;background-color:#FF9;font-size:13px} /* 13px pour rétablir la taille des boutons dans les bilans officiels */
+.fluo{background:#FF0} /* pas de padding sinon pose souci pour du texte dans un tableau */
+div.appreciation,span.appreciation,div.elements{white-space:pre-wrap}
+div.bordertop{border-top:1px dashed #999;margin-top:2px}
+span.pourcentage{display:inline-block;width:3em;padding-right:3px;text-align:right}
+td.moyenne {text-align:center;font-weight:bold;vertical-align:middle;font-size:130%}
+*.probleme, noscript {background:#FF3;color:#C00;font-weight:bold;margin:1ex auto}
+*.important {background:#FF9;color:#000;font-weight:bold;border:solid 1px #FA3;padding:1px;margin:1px auto}
+/* pour obliger l'affichage de l'ascenseur vertical dans certains cas où son apparition / disparition peut déranger l'affichage */
+#force_scroll{z-index:1;position:absolute;top:0;left:0;width:1px;} /* height ajouté en js */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Cadres principaux (dont le menu déroulant)                                                          */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* page accueil (identification) */
+#cadre_milieu {width:736px;margin:15px auto auto auto;padding:10px;background:#E6E6FF;border:2px solid #99F;border-radius:10px}
+#titre_logo{text-align:center}
+#titre_logo a{margin:auto 1em}
+
+/* zone identifiée */
+#cadre_haut   {z-index:   3;position:absolute;left:0;right:0;top:0;height:44px;border-bottom:1px solid #77F;white-space:nowrap;min-width:750px;background:#FFF repeat 0 0 url("data:image/gif;base64,R0lGODdhBAAEAIABANfX/////ywAAAAABAAEAAACBkwAl2h5BQA7");} /* sacoche_fond_cadre_haut */ /* min-width:980px */
+#cadre_bas    {z-index:   2;position:absolute;left:0;right:0;top:40px;bottom:0;padding:4px;background:#FFF}
+#cadre_navig  {z-index:1003;position:fixed;top:1px;right:1px} /* Pour passer au dessus du Plugin jQuery TH Float qui a un z-index de 1000 */
+#cadre_photo  {z-index:1004;position:fixed;top:46px;right:1px;width:100px;text-align:center;background:#FFF;padding:2px;border:1px dashed #77F;display:none}
+#cadre_statut {z-index:1004;position:fixed;top:300px;right:10px;width:150px;background:#FFF;padding:0 10px;border:1px dashed #77F} /* top de 300 requis pour l'admin ; 230 suffit pour les autres profils... */
+#cadre_tactile{z-index:1004;position:fixed;top:60px;left:5px;text-align:center;background:#FF9;padding:2px;border:1px solid #AA0;border-radius:3px;display:none}
+
+/* dans #cadre_haut */
+#top_info {position:absolute;top:0;left:0}
+#logo     {position:absolute;top:2px;right:23px} /* left:824px */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Titres                                                                                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* h1 = titre de la page (ou de section à la page d'authentification) */
+h1{display:block;white-space:nowrap;font-size:115%;text-align:left;font-weight:bold;color:#33A;letter-spacing:0.1em;margin:1ex 2em;background:transparent url(../_img/sprite_titre_2.png) 0 0 no-repeat;padding-left:26px;line-height:16px}
+#cadre_milieu h1.hebergement    {background-position: 0  -20px}
+#cadre_milieu h1.identification {background-position: 0  -40px}
+#cadre_milieu h1.informations   {background-position: 0  -60px}
+
+/* h2 = titre d'une partie (souvent précédé d'un <hr />) */
+h2{display:block;white-space:nowrap;font-size:105%;text-align:left;font-weight:bold;color:#33A;letter-spacing:0.05em;margin:1ex auto 1ex 1em;background:transparent url(../_img/sprite_titre_2.png) 0 -80px no-repeat;padding-left:16px;line-height:14px}
+
+/* h3 = paragraphe dans une partie */
+h3{display:block;white-space:nowrap;font-size:100%;text-align:left;font-weight:bold;color:#227;margin:1ex auto 1ex 4px;background:transparent url(../_img/sprite_titre_2.png) 0 -96px no-repeat;padding-left:14px;line-height:13px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Boutons d'informations (dans #cadre_haut)                                                           */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#top_info div{display:inline-block;height:36px;padding:1px 3px;margin-left:4px;margin-top:2px;border:1px solid #99F;color:#333;background:#EEF}
+#top_info span.top{background:#EEF url(../_img/sprite_top_5.png) 0 20px no-repeat;padding-left:19px;line-height:18px;font-size:105%}
+#top_info span.expiration            {background-position: 1px   -1px;font-weight:bold;color:#C00}
+#top_info span.connexion             {background-position: 1px  -21px;font-weight:bold}
+#top_info span.deconnexion           {background-position: 1px  -40px}
+#top_info span.deconnexion:hover     {background-position: 1px  -60px}
+#top_info span.home                  {background-position: 1px  -80px}
+#top_info span.profil_administrateur {background-position: 1px -100px}
+#top_info span.profil_directeur      {background-position: 1px -120px}
+#top_info span.profil_eleve          {background-position: 1px -140px}
+#top_info span.profil_parent         {background-position: 1px -160px}
+#top_info span.profil_partenaire     {background-position: 1px -180px}
+#top_info span.profil_professeur     {background-position: 1px -200px}
+#top_info span.profil_webmestre      {background-position: 1px -220px}
+#top_info span.profil_developpeur    {background-position: 1px -220px} /* attention : même décalage */
+#top_info span.switch                {background-position: 1px -240px}
+#top_info span.clock_fixe {background:#EEF 2px center no-repeat url("data:image/gif;base64,R0lGODlhEAAQAPZgALKzs0B0oM2mNvLKW/PTfTpslUd9q2WGoU2Gt7C2uVOPwlqYzdeZC+rFYMTFxeyqAPKxAKGhoStXeixYe/S1AMiyTnO8+sWbLXOcs/PQcteyRvbjquiwKGmexr2/wsypOfLPaPP9//P2+ez9/1qMvOzx8nCQxG6Zw3d+gER6sfj//4an09nj8XWs043C36XC4DZropzQ54Cgzun2/OPz+kl/sO75/uHv8uf6/7jDx2WbycHb8Ku+34ip2Je123ClznGXyKvS6/rqujZurtra2pOs1ZPL6YOLjHmi2f///9/1/6OuscLP0pSdnmuTvtrl55vD38zs+s/f79Pw+qbM41iFtNPT09Hf76ixi6G73Z3Bv5XA232pwofE7GuPv0l1oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAUKAGAALAAAAAAQABAAAAfdgGBgEBQUgodghYgQA0IDFRaRFhUgBA+HjQ0fXUYxMUYuAgQZl2AEDQIuVC9FRVlUWhobHIIMF6o8LCUlLFlQWAIMghgtUDxJJU8qKiE+W1wdggstPiwhIk0lIgk7Ky0Lggo/KzM2KihLKDlTQD8Kggg6MjQzN0coTCNRJjoIggYkZOzAQSPHDRxKggAhYUBQgBoneoywESLEiBFITtQIcKhAiohSRIi4ssJJigKIwBxIQcKESy8kqhxICcaKBxgwhgyB8cWBg5QAiACYIKGohAlBEyCKEIGmIKaCAgEAOw==");} /* sacoche_clock_fixe */
+#top_info span.clock_anim {background:#EEF 2px center no-repeat url("data:image/gif;base64,R0lGODlhEAAQAPUFAKGhofLKXfL29n2Bgery8tri7kR9smWdyl19mW2RwpXG4oGhzp2+3vb6/yxZeer6/9ry+nm27rbK1jhtpZ2uws6lNG2ZvlWNvpW62s6ySFmJtnWu0qrS5jRlke76//////a2ALKysvKhme6hmfY0NO4kKPLSgfppZd6RDPZ1ccK+wvZQTOqBffLS1uqqAM7Kyup1dfKRieqVje5pYeqlMPLObfruvvaJgeqRifLm5vr2+tra2v/6+vLGWQAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFMgAFACwAAAAAEAAQAAAGssBCAUQUGoegoytgC6BO0BOqZnIZmT3ULTYaxVIoU81aMGVFohj0JrrRTDQhCoUW5XS8XEzUo6GEM2wiHx85hB83IzMkQicxNy2EADofKi0nLIwFJ4o8hAMhAyoEJDKanCuUAgADL4WlJY1qkToqAoQtKyyxBSspIzCHhzOKvL0xMTCRHy0wLLtHBTA4iiskKyMyK9EFLyozLDIyLDAqKtEhOyEkJCXuJekhRwAA3EL0QkEAIfkEBTIAHwAsAQABAA4ADgAABo/Aj/CTiRgjmeEwUFEoOBwFpqJkPhkYDINDSQorGA6jQCAUGAwA1bJRMD5mYSO7OBw2mEJDABdQOAsbBxcbCw8eQhRCEAkbFwYHCxAPBAMfEg+MBwYGFwscmXAPDxwWjxMGFoYeDQ0eDwsWBhMfHakLBQICBQsJBh1DCAYaCcUJGhoISkIdE86oy0MO09RKQQA7");} /* sacoche_clock_anim */
+#top_info #clock {padding-right:3px;background:#EEF right top no-repeat url("data:image/gif;base64,R0lGODlhAwAPAPECAAAAAEZGRu0cJAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJMgACACwAAAAAAwAPAAACB5SPqcsCoQoAIfkEBTIAAAAsAAAAAAEAAQAAAgJEAQA7");} /* sacoche_clock_point */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Boutons de navigation (dans #cadre_navig)                                                           */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#cadre_navig a{display:block;width:18px;height:18px;border:1px solid #99F;margin-top:1px}
+#go_haut {background:#DDF center center no-repeat url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAdVBMVEUAAAB+qeh0ouJgld0scs0VRbcZWcYXUb8VR7saYsYUQbdHhNY9d9CIsOZ0ouCAq+lDgtV3puV4peCryO+Bq+Oiwu19qeGRtuhLiNYWTsB8qehhl907ccyBq+IYWcSZu+kaYsluoOKZu+ojbs01d9Jil+FTjtvu6wDfAAAADHRSTlMAh4eOpQS3raLvm55SQe+PAAAATklEQVQY02PABTjZWFH4LBIC7Mh8bmleWR4kEWZBeREhMR4OGJ+JV1RchI9PCCbCKCUsLKokzivGJ8MFFuDnF1RUVRNQUVaQkxxwa+EAAHryB9uHnpf4AAAAAElFTkSuQmCC")} /* sacoche_fleche_go_haut */
+#go_bas  {background:#DDF center center no-repeat url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAb1BMVEUAAAAscs0aYsYZWcZHhNZgld10ouIXUb8VR7t+qegVRbcUQbd2pOGAq+l6qOdhl9+ryO9DgtWHsOaBq+Oiwu08ddCRtuh9qeE4dM9woeFLiNaKseSZu+k/etCBq+MWTsCZu+oYWcRTjtsjbs0aYsmy+Bs8AAAADHRSTlMApe+3no6HraKHBJv83+5sAAAAUklEQVQY02PAAuQVVZQlBJX4Jfl4ecEC3BI84kJiCiICAnycECUcojySPMJiIkJsQA5URJxHWIaHFWEMu6ywND8LssHsglKMKDZxMTMNuLWoAACnvweLyaYZNgAAAABJRU5ErkJggg==")} /* sacoche_fleche_go_bas */
+#cadre_navig a:hover{background-color:#EEF}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Menu déroulant (dans #cadre_haut)                                                                   */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* Styles essentiels issus de jQuery Superfish Dropdown Menu Plugin (@see http://plugins.jquery.com/superfish/) */
+#menu {white-space:nowrap}
+#menu li {position:relative;margin-right:5px}
+#menu ul {position:absolute;display:none;top:100%;left:0;z-index:99}
+#menu > li {float:left}
+/* #menu li:hover > ul {display:block} */ /* Retiré et maintenant géré en js car les "tunnels forcés invisibles" sont pénibles (http://www.pompage.net/traduction/menu-survol-et-utilisateurs) */
+#menu a {display:block;position:relative}
+#menu ul ul {top:0;left:100%}
+/* Styles de mise en forme modifiés par rapport à Superfish */
+#menu li {background:#66F}
+/* #menu li:hover {background:#AAF} */ /* Retiré et maintenant géré en js car les "tunnels forcés invisibles" sont pénibles (http://www.pompage.net/traduction/menu-survol-et-utilisateurs) */
+#menu a {border:1px solid #88F;padding-right:10px;margin:0 -1px -1px 0;color:#FFF}
+#menu a:hover {color:#FFF}
+#menu a.disabled {opacity:0.1;cursor:default}
+#menu a.disabled:hover {text-decoration:none;cursor:default}
+#menu li a    {line-height:43px} /* pour le premier bouton (boussole) */
+#menu li li a {line-height:43px} /* dans le reste du menu déroulant ; si modification, @see memoriser_menu() in ./_inc/class.SessionUser.php */
+
+#menu a {background:transparent url(../_img/sprite_menu_28.png) 0 20px no-repeat;padding-left:25px}
+#menu a.boussole                    {background-position: 6px    13px} /* ( line_height 43 - img_hauteur 16 - 1 ) / 2 */
+#menu a.fleche                      {background-position: 6px   -27px}
+#menu a.administrateur              {background-position: 6px   -67px}
+#menu a.algorithme_edition          {background-position: 6px  -107px}
+#menu a.algorithme_voir             {background-position: 6px  -147px}
+#menu a.blocage                     {background-position: 6px  -187px}
+#menu a.compte_accueil              {background-position: 6px  -227px}
+#menu a.compte_cnil                 {background-position: 6px  -267px}
+#menu a.compte_daltonisme           {background-position: 6px  -307px}
+#menu a.compte_langue               {background-position: 6px  -347px}
+#menu a.compte_password             {background-position: 6px  -387px}
+#menu a.compte_switch               {background-position: 6px  -427px}
+#menu a.date_connexion              {background-position: 6px  -467px}
+#menu a.directeur                   {background-position: 6px  -507px}
+#menu a.dump                        {background-position: 6px  -547px}
+#menu a.eleve                       {background-position: 6px  -587px}
+#menu a.etabl_autorisations         {background-position: 6px  -627px}
+#menu a.etabl_choix                 {background-position: 6px  -667px}
+#menu a.etabl_connexion             {background-position: 6px  -707px}
+#menu a.etabl_couleurs              {background-position: 6px  -747px}
+#menu a.etabl_deconnexion           {background-position: 6px  -787px}
+#menu a.etabl_duree                 {background-position: 6px  -827px}
+#menu a.etabl_identite              {background-position: 6px  -867px}
+#menu a.etabl_login                 {background-position: 6px  -907px}
+#menu a.evaluation_demande          {background-position: 6px  -947px}
+#menu a.evaluation_gestion          {background-position: 6px  -987px}
+#menu a.evaluation_voir             {background-position: 6px -1027px}
+#menu a.favori                      {background-position: 6px -1067px}
+#menu a.fichier_export              {background-position: 6px -1107px}
+#menu a.fichier_import              {background-position: 6px -1147px}
+#menu a.groupe                      {background-position: 6px -1187px}
+#menu a.item_selection              {background-position: 6px -1227px}
+#menu a.log_actions                 {background-position: 6px -1267px}
+#menu a.mail                        {background-position: 6px -1307px}
+#menu a.marianne                    {background-position: 6px -1347px}
+#menu a.mdp_admin                   {background-position: 6px -1387px}
+#menu a.message_accueil             {background-position: 6px -1427px}
+#menu a.module                      {background-position: 6px -1467px}
+#menu a.nettoyage                   {background-position: 6px -1507px}
+#menu a.newsletter                  {background-position: 6px -1547px}
+#menu a.officiel_assiduite          {background-position: 6px -1587px}
+#menu a.officiel_brevet             {background-position: 6px -1627px}
+#menu a.officiel_bulletin           {background-position: 6px -1667px}
+#menu a.officiel_palier1            {background-position: 6px -1707px}
+#menu a.officiel_palier2            {background-position: 6px -1747px}
+#menu a.officiel_palier3            {background-position: 6px -1787px}
+#menu a.officiel_reglages           {background-position: 6px -1827px}
+#menu a.officiel_releve             {background-position: 6px -1867px}
+#menu a.officiel_voir_archive       {background-position: 6px -1907px}
+#menu a.parent                      {background-position: 6px -1947px}
+#menu a.periode                     {background-position: 6px -1987px}
+#menu a.periode_groupe              {background-position: 6px -2027px}
+#menu a.professeur                  {background-position: 6px -2067px}
+#menu a.referentiel_edition         {background-position: 6px -2107px}
+#menu a.referentiel_gestion         {background-position: 6px -2147px}
+#menu a.referentiel_ressources      {background-position: 6px -2187px}
+#menu a.referentiel_format_synthese {background-position: 6px -2227px}
+#menu a.referentiel_voir            {background-position: 6px -2267px}
+#menu a.releve_chrono               {background-position: 6px -2307px}
+#menu a.releve_grille               {background-position: 6px -2347px}
+#menu a.releve_items                {background-position: 6px -2387px}
+#menu a.releve_recherche            {background-position: 6px -2427px}
+#menu a.releve_socle2016            {background-position: 6px -2467px}
+#menu a.releve_synthese             {background-position: 6px -2507px}
+#menu a.resilier                    {background-position: 6px -2547px}
+#menu a.rss                         {background-position: 6px -2587px}
+#menu a.serveur_database            {background-position: 6px -2627px}
+#menu a.serveur_debug               {background-position: 6px -2667px}
+#menu a.serveur_erreur              {background-position: 6px -2707px}
+#menu a.serveur_fichiers            {background-position: 6px -2747px}
+#menu a.serveur_geographie          {background-position: 6px -2787px}
+#menu a.serveur_identite            {background-position: 6px -2827px}
+#menu a.serveur_info                {background-position: 6px -2867px}
+#menu a.serveur_maintenance         {background-position: 6px -2907px}
+#menu a.serveur_proxy               {background-position: 6px -2947px}
+#menu a.serveur_security            {background-position: 6px -2987px}
+#menu a.socle_annuler               {background-position: 6px -3027px}
+#menu a.socle_item                  {background-position: 6px -3067px}
+#menu a.socle_langue                {background-position: 6px -3107px}
+#menu a.socle_pilier                {background-position: 6px -3147px}
+#menu a.statistiques                {background-position: 6px -3187px}
+#menu a.structure_ajout_csv         {background-position: 6px -3227px}
+#menu a.structure_bdd_repair        {background-position: 6px -3267px}
+#menu a.structure_gestion           {background-position: 6px -3307px}
+#menu a.structure_transfert         {background-position: 6px -3347px}
+#menu a.trombinoscope               {background-position: 6px -3387px}
+#menu a.user_recherche              {background-position: 6px -3427px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Sous-menus (rappel en haut de page)                                                                 */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+div.sousmenu{margin:0.5ex auto 0.5ex 2em}
+*.sousmenu a{display:inline-block;padding:0.5ex 1ex;margin:0.5ex 0.5ex 0.5ex 0.5ex;background:#66F;color:#FFF}
+*.sousmenu a.actif{background:#99F}
+*.sousmenu a:hover {color:#FFF}
+*.sousmenu a.disabled {opacity:0.15;cursor:default}
+*.sousmenu a.disabled:hover {text-decoration:none;cursor:default}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Icones des navigateurs                                                                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.navigo {background:transparent url(../_img/sprite_navigateur_2.png) 0 20px no-repeat;padding-left:20px;padding-top:2px;padding-bottom:2px}
+.navigo_chrome   {background-position: 0   -1px}
+.navigo_edge     {background-position: 0  -21px}
+.navigo_explorer {background-position: 0  -41px}
+.navigo_firefox  {background-position: 0  -61px}
+.navigo_opera    {background-position: 0  -81px}
+.navigo_safari   {background-position: 0 -101px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Tableau de saisie des résultats d'une évaluation                                                    */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+span.eval {background:transparent url(../_img/sprite_saisie_1.png) 0 20px no-repeat;padding-left:19px;padding-top:1px}
+span.arrow_continue_down  {background-position: 0    0px}
+span.arrow_continue_rigth {background-position: 0  -20px}
+span.pilot_keyboard       {background-position: 0  -40px}
+span.pilot_mouse          {background-position: 0  -60px}
+span.retrecir_hauteur     {background-position: 0  -80px}
+span.retrecir_largeur     {background-position: 0 -100px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Logos page d'accueil une fois identifié (dans #cadre_bas)                                           */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.rien64          {padding-left:70px}
+.accueil64       {background:transparent url(../_img/sprite_accueil64_2.png) 0 300px no-repeat;padding-left:70px;min-height:64px;max-height:500px}
+.alert64         {background-position: 0     0px}
+.ecolo64         {background-position: 0  -300px}
+.favori64        {background-position: 0  -600px}
+.help64          {background-position: 0  -900px}
+.resultats64     {background-position: 0 -1200px}
+.faiblesses64    {background-position: 0 -1200px} /* attention : même décalage */
+.reussites64     {background-position: 0 -1200px} /* attention : même décalage */
+.demandes64      {background-position: 0 -1200px} /* attention : même décalage */
+.saisies64       {background-position: 0 -1200px} /* attention : même décalage */
+.officiel64      {background-position: 0 -1200px} /* attention : même décalage */
+.previsions64    {background-position: 0 -1200px} /* attention : même décalage */
+.socle64         {background-position: 0 -1200px} /* attention : même décalage */
+.messages64      {background-position: 0 -1500px}
+.notifications64 {background-position: 0 -1500px} /* attention : même décalage */
+.user64          {background-position: 0 -1800px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Liens vers un fichier à récupérer ou un document généré                                             */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.file      {background:transparent url(../_img/sprite_fichier_3.png) 0 0 no-repeat;padding-left:19px;padding-top:1px}
+.file_aac  {background-position: 0  -20px}
+.file_mp3  {background-position: 0  -20px} /* attention : même décalage */
+.file_ogg  {background-position: 0  -20px} /* attention : même décalage */
+.file_wav  {background-position: 0  -20px} /* attention : même décalage */
+.file_dmg  {background-position: 0  -40px}
+.file_doc  {background-position: 0  -60px}
+.file_docx {background-position: 0  -80px}
+.file_bat  {background-position: 0 -100px}
+.file_exe  {background-position: 0 -100px} /* attention : même décalage */
+.file_fla  {background-position: 0 -120px}
+.file_g2w  {background-position: 0 -140px}
+.file_g3w  {background-position: 0 -140px} /* attention : même décalage */
+.file_ggb  {background-position: 0 -160px}
+.file_htm  {background-position: 0 -180px}
+.file_html {background-position: 0 -180px} /* attention : même décalage */
+.file_bmp  {background-position: 0 -200px}
+.file_gif  {background-position: 0 -200px} /* attention : même décalage */
+.file_jpe  {background-position: 0 -200px} /* attention : même décalage */
+.file_jpeg {background-position: 0 -200px} /* attention : même décalage */
+.file_jpg  {background-position: 0 -200px} /* attention : même décalage */
+.file_png  {background-position: 0 -200px} /* attention : même décalage */
+.file_gif  {background-position: 0 -200px} /* attention : même décalage */
+.file_iso  {background-position: 0 -220px}
+.file_mgj  {background-position: 0 -240px}
+.file_msi  {background-position: 0 -260px}
+.file_odg  {background-position: 0 -280px}
+.file_odp  {background-position: 0 -300px}
+.file_ods  {background-position: 0 -320px}
+.file_odt  {background-position: 0 -340px}
+.file_pdf  {background-position: 0 -360px}
+.file_php  {background-position: 0 -380px}
+.file_ppt  {background-position: 0 -400px}
+.file_pptx {background-position: 0 -420px}
+.file_rtf  {background-position: 0 -440px}
+.file_skp  {background-position: 0 -460px}
+.file_swf  {background-position: 0 -480px}
+.file_sxc  {background-position: 0 -500px}
+.file_sxd  {background-position: 0 -520px}
+.file_sxi  {background-position: 0 -540px}
+.file_sxw  {background-position: 0 -560px}
+.file_tep  {background-position: 0 -580px}
+.file_tex  {background-position: 0 -600px}
+.file_txt  {background-position: 0 -620px}
+.file_json {background-position: 0 -620px} /* attention : même décalage */
+.file_avi  {background-position: 0 -640px}
+.file_mpe  {background-position: 0 -640px} /* attention : même décalage */
+.file_mpeg {background-position: 0 -640px} /* attention : même décalage */
+.file_mpg  {background-position: 0 -640px} /* attention : même décalage */
+.file_mp4  {background-position: 0 -640px} /* attention : même décalage */
+.file_ogv  {background-position: 0 -640px} /* attention : même décalage */
+.file_wmv  {background-position: 0 -640px} /* attention : même décalage */
+.file_xls  {background-position: 0 -660px}
+.file_xlsx {background-position: 0 -680px}
+.file_xml  {background-position: 0 -700px}
+.file_zip  {background-position: 0 -720px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Images relatives aux états des bilans officiels                                                     */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#cadre_statut div {margin:2px auto}
+
+.off_etat {background:transparent url(../_img/sprite_officiel_2.png) 0 20px no-repeat;padding-left:19px;padding-top:1px}
+.absence  {background-position: 0    0px}
+.vide     {background-position: 0  -20px}
+.rubrique {background-position: 0  -40px}
+.mixte    {background-position: 0  -60px}
+.synthese {background-position: 0  -80px}
+.complet  {background-position: 0 -100px}
+
+.absence  span{padding:0 2px;color:#666}
+.vide     span{padding:0 2px;color:#000;background-color:#FAA}
+.rubrique span{padding:0 2px;color:#000;background-color:#FC9}
+.mixte    span{padding:0 2px;color:#000;background-color:#FF9}
+.synthese span{padding:0 2px;color:#000;background-color:#CEA}
+.complet  span{padding:0 2px;color:#000;background-color:#8C8}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Images pour les pages de validation du socle                                                        */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+span.socle_info {background:transparent url(../_img/sprite_socle_info_1.png) 0 20px no-repeat;padding-left:19px}
+span.eleve      {background-position: 0    0px}
+span.socle_n1   {background-position: 0  -20px}
+span.socle_n3   {background-position: 0  -40px}
+span.stats      {background-position: 0  -60px}
+span.voir       {background-position: 0  -80px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Images pour les vignettes du livret scolaire                                                        */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+span.livret {background:transparent url(../_img/sprite_livret_05pourcent_1.png) 0 66px no-repeat;width:47px;height:66px;margin:0 2px;display:inline-block}
+span.livret_float_seuils   {margin-right:1em;margin-top:1ex;float:left}
+span.livret_float_liaisons {margin-right:3em;margin-top:0.5ex;float:left}
+span.livret_3e         {background-position: 0    0px}
+span.livret_4e         {background-position: 0  -66px}
+span.livret_5e         {background-position: 0 -132px}
+span.livret_6e         {background-position: 0 -198px}
+span.livret_brevet     {background-position: 0 -264px}
+span.livret_ce1        {background-position: 0 -330px}
+span.livret_ce2        {background-position: 0 -396px}
+span.livret_cm1        {background-position: 0 -462px}
+span.livret_cm2        {background-position: 0 -528px}
+span.livret_couverture {background-position: 0 -592px}
+span.livret_cp         {background-position: 0 -660px}
+span.livret_cycle1     {background-position: 0 -726px}
+span.livret_cycle2     {background-position: 0 -792px}
+span.livret_cycle3     {background-position: 0 -858px}
+span.livret_cycle4     {background-position: 0 -924px}
+/*
+span.livret {background:transparent url(../_img/sprite_livret_10pourcent_1.png) 0 132px no-repeat;width:94px;height:132px;margin:0 3px 0 2px;display:inline-block;float:left}
+span.livret_3e         {background-position: 0     0px}
+span.livret_4e         {background-position: 0  -132px}
+span.livret_5e         {background-position: 0  -264px}
+span.livret_6e         {background-position: 0  -396px}
+span.livret_brevet     {background-position: 0  -528px}
+span.livret_ce1        {background-position: 0  -660px}
+span.livret_ce2        {background-position: 0  -792px}
+span.livret_cm1        {background-position: 0  -924px}
+span.livret_cm2        {background-position: 0 -1056px}
+span.livret_couverture {background-position: 0 -1188px}
+span.livret_cp         {background-position: 0 -1320px}
+span.livret_cycle1     {background-position: 0 -1452px}
+span.livret_cycle2     {background-position: 0 -1584px}
+span.livret_cycle3     {background-position: 0 -1716px}
+span.livret_cycle4     {background-position: 0 -1848px}
+*/
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Puces diverses                                                                                      */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+*.travaux {padding-left:50px;color:#000;     background:#FF0        no-repeat 5px      url("data:image/gif;base64,R0lGODlhJgAmAPEDAP/eAAAAAG1tbQAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFGQADACwAAAAAJgAmAAACw5yPacGhD+NpTVrJgAbsepRtWvddoTg6ZXSi6fq07gtPAUrhKixT/f6RcXwukkc4zBWBrNvM51xaMlBqY7YxKkLRZBebZS6iZCJYl2jdoJyzdIzzOr9KqZA90l2fe1H1j6fXZdVHVyfId+jXZ/clh6SjIwC3uMbItzhpU5nimLWkCVI295NXFppGqlpJloK6ZUnKqhbwGmPZ2WnGYAtBlfto1dvkJlkDCVpDecarvAnW7PycLC1KXW0dNlwNtY1N4a1QAAAh+QQFGQACACwGAA0AGAANAAACKoyOqcvtD5eJB9iLg94Ne7Bp4PiVzZR4lCBu14qEgbrKWB1a8GG/NWMpAAAh+QQFGQACACwHAA4AEwALAAACGYyOqQm2fwCAtNqL8wuyz8t5n+V4WoQ5SQEAIfkEBRkAAgAsBgAHABMAFQAAAjmUjwIL6beeNCDYO+HFKTC2WQj4dd5XhSoKqifbqlm3BDNy2veo71TvC+IaQsEr2IvcQsoZcCcSugoAIfkEBRkAAgAsBgAHABMAFQAAAjyUjxIb6beeNIyBCWu4CfivbUgYIR+wbaB1nstatS2JctjhiTde74nuo9iCRFOjKKgdfbbSDaVhIj3TUAEAIfkEBRkAAgAsBwAOABMACwAAAhqEjqkZtn9CgLTai/MDkksMeNJ0OSOpoZWTFAA7");min-height:40px;line-height:40px;font-weight:bold;} /* logo_chantier */
+*.astuce  {padding-left:19px;padding-top:1px;background:transparent no-repeat top left url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABL1BMVEUAAAA0UY81frxHjs41UIlEjcxAjco1UYxOl9U0aKw1cK80UIk1fb01aas1ZqtHkc41eLg1frxJkdE1Zak1UY80XKQ1Vp41UZBAi8dMktJSmNhNltQ0T4Y0Vp80VZk0UpI1UIlrmcZxncyiv95plsRok8JsmMX+//9lkL5ehbR2oM92o9F6pNKHrdaow+GEq9CvxuNzns71+PuMstliirm2zOeyyuX09/t4pMZlmstGjc6YtNOAqdafvOBcg7FijLuevNp3ncSrxt80UZQ0T4aTuNRgiremw9s1a7Fekb+rwuHU4O6lwN+Nqs2Rs9lWe66Ts9s7hcU1fr+ivNrT3+0zVZ/Q3Opbirlpkr6XuthqoNCduuBBi8u4y+F9p8tylr5SequQtNJXgLI0UIpsmcX3fijNAAAAIXRSTlMAfVPyUyLnIlNTIvL08vJ+fuf0In5+5+d95yN99FP05+ekUZ5YAAAAzElEQVQY023ORXYCARBFUUgChAjuTrt34+7u7g69/zVQ2Iw/e/fUoBRv53I701u1Q/Xqb9MalaRc6u/j2elIbMNn+22+qb216jMSz3KCwLKoqDMD6FMxjgmFwwjCdBdWAHVuyIQQFJVlQlzZAEZxDgkSJInhOFGuAIwlVsawToKiqOUdjEU+iOHTRCEaLdXsAIaWQOA7kpzTdGZgAfj5FydUoU7n873kr0YB0872xVKdPmSS1a/Hq17fudZonI4e6Mc0Sv+lGlDC/ZtdAZWsIDE+8vDCAAAAAElFTkSuQmCC");} /* puce_astuce */
+*.noprint {padding-left:19px;padding-top:1px;background:transparent no-repeat top left url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABklBMVEUAAACBgYFTU1OBgYFNi8hCeb+BgYFjb4Q7dsREfcFHR0ddXV1jY2NWVlYjIyMjIyNklslPjMnX19e7u7vN4/y1tbVLicb8/Pz5+fnu9PjJ4frs8vjD3fnQ5PzT5/2dJiaBgYG8v8SZmZnf4OAjIyPx9flFgMO81vPw9PnoX1+6Ghq3KCjMzMymf39nWIJYVla8QkOuqqp9fX17eXmVPj7o6OjU09OOjo5hYWHExMTHxMRwcHBglMejpKXX5vJJhsR9suJjkdr4+/3N5vyEtuLf6fTp7/XP0OS11PPBkJ64ODzQ3PTYERHRnaHP1NuhlZiolZrFEhKKGxt0NDSIdHSYY2OuFhZtamqnkJFrUFC+tcqfNTXMR0eIWlqBbGzVr6/X3uVPhL7CtbXu6OiLKSm5WVnuZWWVJiZ1dXVVgKurLy90dHS6Ly/ctLmvQ0uVKiqnp6fCbW1qamrb4euXNjZSUlKMIiLy8vJba6Hu6emXVFRDQUHX3+m7vsNYGho/Pz/P2OFsUlIqKipTeaM5HByysLDHnUEmAAAAEHRSTlMAY2PcwahFCJRgRdyZ6HrbXfz63wAAAPJJREFUGNM9y2N3xEAYhuG33BozmSTNxEnXNmvbtm2b/7s57Xavb899zgOWytJGC1sB/1ppE6W0pa3dlg9sM8MIYkdnV1khSJIgdtMe+9+2sU5ZZgRHn9P++ylS14f7e2VGdBz7A8UA5brXv+MaGJQWToJ3qcMqKInHVraCLs/ywWkkHEvVgspx3s3V7aWj8/vbNMdlIMzzIWNj0aMoaSPH80mIIKSjqHvXd3UTTyD0CnsYJ6bdMz4cij6oGH9AhpCpiaHJ2eT148s7ISZcnJH5cWVU07Tn3Ne3bkJNdWB/bmxk7fLpzfg06+vAkm3Iy1rjB+LHLR15AuvLAAAAAElFTkSuQmCC");color:#C00;} /* puce_noprint */
+*.danger  {padding-left:19px;padding-top:1px;background:transparent no-repeat top left url("data:image/gif;base64,R0lGODlhEAAQAMQfAP///+JQUPIkJN5ZWTg4OOZQUO4sLP/6+nl5edrW1vr29uo4OO40NBwcHO4wMN5QUOZxce7W1t7e3uplZe7KyuaBge7GxuZ5ec5hYeptbfLa2u7S0uq+vu4oKPIoKAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBCgAfACwAAAAAEAAQAAAFduAnjh+GkSgpLIuQosPCccvwjsKUJJN7xxYCwVK7CTIKoSLjgzkoACGA4rChBBBFlABQQJqigWED2JY3BqtIcDmUEYjy4dIUR8oAiQQfSYsMFW4ACQ0NCXIVBh8DHRp4AHCPGh0DAQIBmJmamJcfD5ugAQ83pCEAOw==");color:#C00;} /* puce_danger */
+*.manuel  {padding-left:19px;padding-top:1px;background:#CCF        no-repeat top left url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAB40lEQVQ4y3WTv2pVQRDGf+fk3psQGxVFLJKgKEjiTaeCguALKD6BhSB2PoAPo4iV2iiIgoWxE7QWC1G0jEX+gMnZ3Zn5LPZEY7x3YRlYdn7zfbszjSSu33uwIumpYANxWQgJkKhBf3Z4oaStb+8e3T8NMKBeuCM4N15ebNZ/biHtJUGFBQrY3PrFbhKhwSn6VQFwdby80FxbXWDx5BhVAqGoVaNWP354nvm5AVdu3OUfANKR8coSrz5+YWNjB0UAEHsqJBRic3uHLmX2r94CzWA04Oz5Jc6cOIo7SEGEcBcegYXY7QpPnq1NAgj34Pv6NqN2SNd1lJSxqOfGDIPhiGOHZglpAgAID8wLKSVuXjxT5Vd1SOLh28+UuSEH8v8qKB54McxbHq99IhXDXLgFRsNwNCJbfdSJALMgl0IOUDtLMxxCK6IJIoLsDdmnAqCYY52RimMeFI8+VjgNmA9QTFPgQUmFVLzacZF7iLloG7DsUx6xt1ByBViIbIF7UEKU4szQUuY12UJIZHMsGakEJQI3UcIppe8FOcVi2i9QL2WvFiIwC8yEWe2FVg1uQoiI+PGfBdqWC5dWUdPgLsxF9FF9N+ZsSJC6tHYQ8Ob1y/e36+Tt638EByYT8eLrh+e39gC/AXz61Za7OscLAAAAAElFTkSuQmCC");} /* puce_manuel */
+*.rss     {padding-left:19px;                background:transparent no-repeat top left url("data:image/gif;base64,R0lGODlhEAAQAMQfAOqdRNpZAObOtua+mfLy8uJ5ANpdAOayfeKROObm5uJ1AN5lAOJ5BOKVbe66heqhVeqqZeLe2tZZAOrayuaFAO7q6tZQAOKVSN5pAOKFHOqdZequce7e1t5xAOJ1BAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQACgAAACwAAAAAEAAQAAAFtCDXWFJZBigqNaIzDE4sH1sNjQdRcYID/Y8HYBiQbAhInWATFA4NxsNhMEFWHMMsFHi5HCaVyiCLWEggAljwMqgkIAwKZRF4WAUXhmeQiCAKc3UCAmEcFwUZAgkDcXQIDBgIhBx/FxF+BRgBDAoKHomLDAwCERuZAQptAh4IEQl/GxEDCnQKHGEYowkNCgARAh1mCl8DC8MRBwqtE8ENHQUKz3IFgNMdLA0BBtsL3d0YGAssIQA7");} /* puce_rss */
+*.manuel:hover {background:transparent no-repeat top left url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA51BMVEUAAAAkVIIkVIJKfqxWjLpRh7VOg7Fjmsg6bZpHe6kZSXYVRHFdi7P5+fn4+Pj7+/timMbU1NTp6en19fURP2wVRHEtX4woWYbNzc3x8fHLy8vt7e3Y2NgCMF0GNGE4apgNPGkKOGUcS3khUX4yZZO8vLzHx8fz8/Pv7+89cJ5JfatOg7FTibdYjrtjm8nc3Nx+q8/Jyclgia2wxdjFxcXf399qlbokVIKmpqY3ZpJCdqNckb5glcIaSHRDd6Wnp6dck8EzY5G1tbV0oMaCrtN7pstmkLTS2N3f5evj4+N0kKtzj6qlpaUAXNKyAAAADHRSTlMAv5/0My30MzMz7u5GDlsRAAAAwUlEQVQY023N1xKCQAxA0dhBzbp0F7CBiF1R7L3X//8eQR71vGSSuTOBX5lQEiDJ8zzHBXv/PBxeTqnUdHodjeoc0D4iknE6McaAWgFKsej57HYv6J6D2gHoHllTFI4TiRkTtFWgPdQ9X9iZkt5wiKXBuovMEIW5KTXFAVFsWHXCIji4nu8Q2YJe+1u8TdcIitoGutvwLXu4BIlIygp0WpW6qs2eL0Wu1solGdr5L9uKZhWWUbFYREUJIvFsLgb/fQAlSBgVoWuMHwAAAABJRU5ErkJggg==");} /* puce_manuel_ouvert */
+
+a.cocher_tout {padding-left:19px;background:transparent no-repeat top left url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAADFBMVEUAAAD///+Oj48dmEJfWZMAAAAAAXRSTlMAQObYZgAAAENJREFUCNdjYNBatYqBQTU0jIFp1aplDEyhoWkgoTSQEIgoAxHf0hjUw0HE/WtA4n9YFoPq37AEBtXSsAUgdRBDwAAAyEQXW8NQMwkAAAAASUVORK5CYII=")} /*sacoche_check_cocher_tout */
+a.cocher_rien {padding-left:19px;background:transparent no-repeat top left url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAgMAAABinRfyAAAADFBMVEUAAACOj4/////vND5Ha/JWAAAAAXRSTlMAQObYZgAAAEBJREFUCNdjYBANDWVgkFq1koExNDSSgXHVqpkgoZkgoZkM0q9+AonfQELq/0sgsX8lmDUVJDYBJBsAUgcxBAwAYT0cIvD6ISgAAAAASUVORK5CYII=")} /* sacoche_check_cocher_rien */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Liens spéciaux                                                                                      */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+a[target=_blank] {padding-right:14px;background:transparent no-repeat     right url("data:image/gif;base64,R0lGODlhCgAKAKK+AABjzgBj/zGczmOczpzO/////wAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQBCgAFACwAAAAACgAKAAADJVha0b5iLDaDWAFoEAgGSlcQV8Z4RDOYxJCCFzgGhVxPt7LtSwIAOw==");} /* puce_popup_onglet */
+a.pop_up         {padding-right:18px;background:transparent no-repeat top right url("data:image/gif;base64,R0lGODlhDgAPAKIEAABQzv///53K/77i/wCFAABIvuLy/wAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQACgAAACwAAAEADgAOAAADOQi6zPUwvlCaZSHrbYzaQUeMxPBpnTGQJhBYJCF8DSvT3aCXQo/rOkDP5wIAg8NZ0ZL8HAdJ4sWSAAA7");} /* puce_popup_window */
+a.lien_mail      {padding-left :15px;background:transparent no-repeat top left  url("data:image/gif;base64,R0lGODlhDAAOAMQAAJ2dzp3K+sby9u7eup2h1s7//6q23tb//66dstLm8r7u+v//5vbKlf/eler//52q3qre/66uyv//9v/ymbbm//rGgaHW/97//5226rLO7u7Gnc6+tqWlzr66vubm5gAAACH5BAEKAB8ALAAAAAAMAA4AAAVn4CeKQDmeXzdNTQecnNo0TFUho2bPjKYhr4hkSBwMEJwScbhYRAQGgCHikSwGmwjgEHVcEoCEwyEVPLaHA2DsAFPOhQLncogLFAACgALIKCgUEBYWASUWBoCCAQEYeiWLjVInJignIQA7");} /* puce_mail */
+a.no_puce        {padding-right:0;background:transparent}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Images cliquables                                                                                   */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+q {background:transparent url(../_img/sprite_action_14.png) 0 20px no-repeat;width:16px;height:16px;display:inline-block;vertical-align:middle;margin-left:4px;quotes:none}
+q:before, q:after {content: ""} /* patch pour Safari : voir par exemple http://forum.alsacreations.com/topic-4-41216-1-Resolu-Modifier-le-style-des-citations-quotqquot.html */
+q.activer            {background-position: 0     0px}
+q.actualiser         {background-position: 0   -20px}
+q.ajouter            {background-position: 0   -40px}
+q.ajouter_non        {background-position: 0   -60px}
+q.annuler            {background-position: 0   -80px}
+q.audio_ecouter      {background-position: 0  -100px}
+q.audio_ecouter_non  {background-position: 0  -120px}
+q.audio_enregistrer  {background-position: 0  -140px}
+q.choisir_compet     {background-position: 0  -160px}
+q.choisir_socle      {background-position: 0  -160px} /* attention : même décalage */
+q.choisir_eleve      {background-position: 0  -180px}
+q.choisir_prof       {background-position: 0  -200px}
+q.cocher_inverse     {background-position: 0  -220px}
+q.cocher_rien        {background-position: 0  -240px}
+q.cocher_tout        {background-position: 0  -260px}
+q.date_ajouter       {background-position: 0  -280px}
+q.date_calendrier    {background-position: 0  -300px}
+q.date_periode       {background-position: 0  -320px}
+q.demander_add       {background-position: 0  -340px}
+q.demander_non       {background-position: 0  -360px}
+q.deployer_m1        {background-position: 0  -380px}
+q.deployer_m2        {background-position: 0  -400px}
+q.deployer_n1        {background-position: 0  -420px}
+q.deployer_n2        {background-position: 0  -440px}
+q.deployer_n3        {background-position: 0  -460px}
+q.detailler          {background-position: 0  -480px}
+q.detailler_non      {background-position: 0  -500px}
+q.dupliquer          {background-position: 0  -520px}
+q.echanger           {background-position: 0  -540px}
+q.ecrire             {background-position: 0  -560px}
+q.ecrire_go          {background-position: 0  -580px}
+q.imprimer_arbre     {background-position: 0  -600px}
+q.imprimer           {background-position: 0  -600px} /* attention : même décalage */
+q.imprimer_non       {background-position: 0  -620px}
+q.initialiser_mdp    {background-position: 0  -640px}
+q.modifier           {background-position: 0  -660px}
+q.modifier_non       {background-position: 0  -680px}
+q.module_envoyer     {background-position: 0  -700px}
+q.module_envoyer_non {background-position: 0  -720px}
+q.ordonner           {background-position: 0  -740px}
+q.ordonner_non       {background-position: 0  -760px}
+q.calculer           {background-position: 0  -780px}
+q.calculer_non       {background-position: 0  -800px}
+q.envoyer            {background-position: 0  -820px}
+q.envoyer_non        {background-position: 0  -840px}
+q.partager           {background-position: 0  -860px}
+q.partager_non       {background-position: 0  -880px}
+q.ress_ajouter       {background-position: 0  -900px}
+q.ress_page_elaborer {background-position: 0  -920px}
+q.retourner          {background-position: 0  -940px}
+q.saisir             {background-position: 0  -960px}
+q.saisir_non         {background-position: 0  -980px}
+q.supprimer          {background-position: 0 -1000px}
+q.supprimer_non      {background-position: 0 -1020px}
+q.tamponner          {background-position: 0 -1040px}
+q.tamponner_non      {background-position: 0 -1060px}
+q.texte_consulter    {background-position: 0 -1080px}
+q.texte_consulter_non{background-position: 0 -1100px}
+q.texte_editer       {background-position: 0 -1120px}
+q.texte_enregistrer  {background-position: 0 -1140px}
+q.uploader_doc       {background-position: 0 -1160px}
+q.uploader_doc_non   {background-position: 0 -1180px}
+q.valider            {background-position: 0 -1200px}
+q.voir               {background-position: 0 -1220px}
+q.voir_archive       {background-position: 0 -1240px} /* attention : ordre à vérifier en fonction des noms de fichier et de leur prise en compte lors de la génération du sprite */
+q.voir_archive_non   {background-position: 0 -1260px} /* attention : ordre à vérifier en fonction des noms de fichier et de leur prise en compte lors de la génération du sprite */
+q.voir_repart        {background-position: 0 -1280px} /* attention : ordre à vérifier en fonction des noms de fichier et de leur prise en compte lors de la génération du sprite */
+q.voir_non           {background-position: 0 -1300px} /* attention : ordre à vérifier en fonction des noms de fichier et de leur prise en compte lors de la génération du sprite */
+q.n1_add             {background-position: 0 -1320px}
+q.n1_del             {background-position: 0 -1340px}
+q.n1_edit            {background-position: 0 -1360px}
+q.n1_move            {background-position: 0 -1380px}
+q.n1_move2           {background-position: 0 -1400px}
+q.n2_add             {background-position: 0 -1420px}
+q.n2_del             {background-position: 0 -1440px}
+q.n2_edit            {background-position: 0 -1460px}
+q.n2_move            {background-position: 0 -1480px}
+q.n2_move2           {background-position: 0 -1500px}
+q.n3_add             {background-position: 0 -1520px}
+q.n3_del             {background-position: 0 -1540px}
+q.n3_edit            {background-position: 0 -1560px}
+q.n3_fus             {background-position: 0 -1580px}
+q.n3_fus2            {background-position: 0 -1600px}
+q.n3_move            {background-position: 0 -1620px}
+q.n3_move2           {background-position: 0 -1640px}
+q:hover {cursor:pointer}  /* Curseur pointeur pour ces images qui sont des liens */
+tr.no_margin q{margin-left:0}
+
+/* Pour des images associées à un select... */
+span.select_img {width:16px;height:16px;display:inline-block;background:transparent url(../_img/sprite_action_14.png) 0 20px no-repeat;margin:auto 2px;}
+span.droit_x {background-position: 0   -80px} /* 0 (aucun) */
+span.droit_v {background-position: 0 -1220px} /* 1 voir */
+span.droit_s {background-position: 0  -960px} /* 2 saisir */
+span.droit_m {background-position: 0  -660px} /* 3 modifier */
+span.droit_z {width:16px;height:16px;display:inline-block;margin:auto 2px;} /* 4 (propriétaire) */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Style pour les formulaires                                                                          */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* Affichage des message ajax dans des champs <label> */
+label.alerte , label.erreur , label.loader , label.valide , label.astuce {padding-left:19px;padding-bottom:1px;background:transparent no-repeat top left;}
+form label.alerte , form label.erreur , form label.loader , form label.valide , form label.astuce {margin-left:5px}
+label.alerte {color:#A00;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAA8FBMVEUAAADouDnotjjZmSTmsjTotTfbnCbgpi3otjflsDPmtDbsvz3eoyvntTfotzjrvDzrvDzjrDHpuTrmszbUjh3mszbNgBPJeQ7lsDTDbQbjrTHiqi/BaAO/ZADWoj3+/O/+/PP02lzz11f13F356JT++uf12lj+++vRiBj110///vnx04T++u3puTn888X89uHx16D89tb147/y1lT12VP23WPeoyrIdAvCagTbnSbYliHlu2jtyHH36sjdsUf679XhqS/y2JT036nw04/6657nwH3w0ozry1f45Yvlv4j677Xov2Lgpy3Sk0TMfhHrzquByH+SAAAAHnRSTlMAA1rx/s5aDBIw+wPKad6V3pa4rIckJLhLS/Cj46PpUlYpAAAAsElEQVQY03XP1Q7CQBBA0cXd3bbbrcMidcHd4f//hgIBSgjzMMk9yTwM+DOJbMj3BZlOJ+XtaJeaBqMeyM8Rt8x9OtZtsysyi70hvSAQyoPkq/2jNgMhTYbhZ0fiY46GEPeUQOQBhY3A0hOImf66eO9SEPUYWt+qGtsXyy6EBtyOd09UTZL3FQCqR3TgeYwxL0m6cK6BuoIoQijKXURA1yZonAzDth1HFC+maVmtn79vaXwWBrYtRuMAAAAASUVORK5CYII=");} /* ajax_alerte */
+label.erreur {color:#A00;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABCFBMVEUAAADjbG3YYlzeamfOW064SirJWEe6TTDPXU+1SynhaWq4Syq5TC6/UznCUjzPYVPRXlPGVULfamrgaWrWY1vUYFjhbGzibW3HV0XpWU3////sX1T5k372hGzmV031op72rKHjbmPwjHfnenLvhH3uko+9UDTvZVTmWVD93NbqW0/6nYvDTjP7qp3vj4D71M3aY2DzeGPcZmP6uq/OUD33r6XsaF3XXVHgZVzLWUm3Sivzc13WYFT8x7r4jHb1pqHyrar6mofgaWrzp6P4tqjMW0zbVkv2gmjwhXDnXVn0tKq8SzDpY1vqg334hnD4w775y8T6o5Hie3X0joHxnZbxnJbpf3jviHkpMtHkAAAAGXRSTlMAU+fnU/NTIiJTfX3n533y9PT08n1+IiPyYA6PqQAAALRJREFUGNNtjkUSwkAUBXF3DwwQBeKOu7vD/Y/CTEJW0Lvu+r/quf5SjHg1xZMLOe7OMBf5uidSvq/Pp6x+48URtQogL2QX7EwiARgviRL6ipxkHpBViGoaCRi8pkhWLNTHOw6DpoNt2QJrPxswKPh544QXCh4JDDALjr7HYMiv8WYTea1VF6IwhJIEXuGwFvShP4iG+HrdCX3c0fVOP2xPDaQNimEowQ/dJpiINw6xKLr/5QMq8hgf8baEVQAAAABJRU5ErkJggg==");} /* ajax_erreur */
+label.loader {color:#139;background-image:url("data:image/gif;base64,R0lGODlhEAAQALMDAExxuoGdzixZquLq9p223mGJxs7e9rLK5r7O7jhhrpGq2mmNxtbm9qW+5nGVxgAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFAAAPACwAAAAAEAAQAAAEUPDJ+QyjmBo78hzdxnQHgoFgdR2l+aEUi7hvVlJC4k0E8Qg5nUfRawATwgyR0PglPT0KAJAJBDDTKcUaUEizj8LiwfV+w2IH+borpHcYsScCACH5BAUAAA8ALAAAAAAQABAAAARS8Mn5Br13WExFqttjMJfgfZsxho+ZfJPKsC1MjRQAcNOBPDod7+BDBHccIuIn5D18lMICQyBcClIHRVFtRLOPQODBJXijU3FA8ag61WznRMyJAAAh+QQFAAAPACwAAAAAEAAQAAAEUvDJ+USimAp7swRAxT1DBoLVNZTYGU6rh2LsVCzeZDBPcTs5w27gWwA9QkbplpPsKIFA5oDARAMKyoFanVyzBMJji+h6pYpwY2zOpAnr5iTsiQAAIfkEBQAADwAsAAAAABAAEAAABFHwyfkAoJham2dZ1fYICVZ8TjiSpYdSAmuCGEkFQTcNEh4ougHv4QN2hBOcTjKcEAgZAwOjeDYoBmnzUSVcD4hHlrF9PB8HcFi6TCPCywm4EwEAIfkEBQAADwAsAAAAABAAEAAABFHwyflWoZg6e7MMwbMVFwBgChhaj2lSKUi5JyVj70QQ3pQIj8ZO0Uv8BEIC0WMUAHc9yY+COHgGGETVihlgJ9qDlWGYeLPWAbn8+F7XUQrZEwEAIfkEBQAADwAsAAAAABAAEAAABFPwyflCoJgqe7MkxLNZz1JgDahUl2OeU0qsk1vAE5iZFHJ4EwDggfD9PEJh8XDMJIc+oERIYRgyCQFmYL1OElnthGvwDh5ggXhiHZ+zUsngHB97IgAh+QQFAAAPACwAAAAAEAAQAAAET/DJ+QihmDar8kTHsxFdEGAIGFqPYp6fSrkmGmL1xBjetBSPwY7ncfwKQgMxYywAdz3JDzPIAACeQXVyvWa0j4Tg0cVSw+Kxt5dIRyliTwQAIfkECQAADwAsAAAAABAAEAAABFHwyfnQoZgie7NkRsU9BIENYGg9TalQqBFOLfFSYFae3hQEk8Ggp/gBH0KiUTLsPX6UhCCzKGAS0unEUbVOsIIpAPDgFrxf8Zhcda7JzsnYEwEAOw==");} /* ajax_loader */
+label.valide {color:#080;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABLFBMVEUAAAAmjhwulhwxmBxbwjdTuiw8ox4fdRsfcBtfxjxgxz1ZwjZOtChexTtCqx9bwjlStytVvjQecRoebho9pB5CqR8fgxsfcRsfcRsfdxsfehsffhsmjxwgiBwfeBtJryu24a////+02qeXzIZvxmR1yWlvwmJ6y2xyyGec2JKi15X9/vxut1dvtViAy3Jyulu136ya0IuQzn9UvzJuxGGDzneu3KW/47d0t1t+umfY7dNwv1t8uWV2wmTz+vGIw3RNmT8ecRqr05t9wGiv16EdbBpquVB0wllSuy2LyHjt9+synR3A5Lmf0pGx3aev3KZCrR9LtCaa1I1ksEyHyXmZzYqDvm13vGB+x2+FxXUgihvm9OOWx4NSoEKayodeqUiax4cefxseehut1Z4Mpj07AAAAIHRSTlMAU/IifedTIlMiU/QjU/TnffLy9H7n9H3nfud9fufnIgOOe+MAAADGSURBVBjTbcpFssJQFEVRPvJxd62XhCghgru7u/v8B8EFih6nt1cdxc/p1dZkT2Mzfdtg7HKZDNex/H/anEwgNp1mUX/4Fr09gWiSIUlaqipVAOoioploNEVld9I1BKDhWBKSGmFHWQ4DzCcCgwpUFovJzdYdYDYVhAo2wGKE2Gw9ANzjRXlVgeZF4hYBcC2lcnFfWPPxHF7zA6iUVXwr8nHovEOrgP0dNjiRLxF4qa2DfInnfGk0TjUn9GfaYKBe93nh/2NPlJAec13WlaoAAAAASUVORK5CYII=");} /* ajax_valide */
+label.astuce {color:#139;background-image:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAABL1BMVEUAAAA0UY81frxHjs41UIlEjcxAjco1UYxOl9U0aKw1cK80UIk1fb01aas1ZqtHkc41eLg1frxJkdE1Zak1UY80XKQ1Vp41UZBAi8dMktJSmNhNltQ0T4Y0Vp80VZk0UpI1UIlrmcZxncyiv95plsRok8JsmMX+//9lkL5ehbR2oM92o9F6pNKHrdaow+GEq9CvxuNzns71+PuMstliirm2zOeyyuX09/t4pMZlmstGjc6YtNOAqdafvOBcg7FijLuevNp3ncSrxt80UZQ0T4aTuNRgiremw9s1a7Fekb+rwuHU4O6lwN+Nqs2Rs9lWe66Ts9s7hcU1fr+ivNrT3+0zVZ/Q3Opbirlpkr6XuthqoNCduuBBi8u4y+F9p8tylr5SequQtNJXgLI0UIpsmcX3fijNAAAAIXRSTlMAfVPyUyLnIlNTIvL08vJ+fuf0In5+5+d95yN99FP05+ekUZ5YAAAAzElEQVQY023ORXYCARBFUUgChAjuTrt34+7u7g69/zVQ2Iw/e/fUoBRv53I701u1Q/Xqb9MalaRc6u/j2elIbMNn+22+qb216jMSz3KCwLKoqDMD6FMxjgmFwwjCdBdWAHVuyIQQFJVlQlzZAEZxDgkSJInhOFGuAIwlVsawToKiqOUdjEU+iOHTRCEaLdXsAIaWQOA7kpzTdGZgAfj5FydUoU7n873kr0YB0872xVKdPmSS1a/Hq17fudZonI4e6Mc0Sv+lGlDC/ZtdAZWsIDE+8vDCAAAAAElFTkSuQmCC");} /* puce_astuce */
+/* Mise en page tabulée des éléments */
+form label.tab {line-height:1.6em;display:inline-block;text-align:right;width:11em;margin-right:0.5em;font-weight:bold}
+form span.radio{line-height:1.6em;display:inline-block;text-align:right;width:25em;margin-right:  1em;font-weight:bold}
+form span.tab{line-height:2em;margin-left:11.5em}
+form label.mini{width:6em}
+form span.mini{line-height:2em;margin-left:6.5em}
+#zone_ressources label.tab{width:6em}
+#zone_ressources span.tab{margin-left:6.5em}
+
+/* Boutons de validation */
+button{background:#DDF url(../_img/sprite_bouton_9.png) 0 20px no-repeat;padding:0 1px 0 19px;margin:1px 0;color:#139;border:1px solid #66F;line-height:17px;text-indent:0}
+button.actualiser        {background-position: 2px    0px}
+button.ajouter           {background-position: 2px  -20Px}
+button.annuler           {background-position: 2px  -40px}
+button.annuler_next      {background-position: 2px  -60px}
+button.annuler_prev      {background-position: 2px  -80px}
+button.colorer           {background-position: 2px -100px}
+button.corriger          {background-position: 2px -120px}
+button.dump_export       {background-position: 2px -140px}
+button.eclair            {background-position: 2px -160px}
+button.enregistrer_start {background-position: 2px -180px}
+button.enregistrer_stop  {background-position: 2px -200px}
+button.fichier_export    {background-position: 2px -220px}
+button.fichier_import    {background-position: 2px -240px}
+button.form_ajouter      {background-position: 2px -260px}
+button.form_retirer      {background-position: 2px -280px}
+button.generer           {background-position: 2px -300px}
+button.go_dernier        {background-position: 2px -320px}
+button.go_precedent      {background-position: 2px -340px}
+button.go_premier        {background-position: 2px -360px}
+button.go_suivant        {background-position: 2px -380px}
+button.groupe_ajouter    {background-position: 2px -400px}
+button.groupe_retirer    {background-position: 2px -420px}
+button.imprimer          {background-position: 2px -440px}
+button.mail_ecrire       {background-position: 2px -460px}
+button.mail_envoyer      {background-position: 2px -480px}
+button.mdp_groupe        {background-position: 2px -500px}
+button.mdp_perso         {background-position: 2px -520px}
+button.modifier          {background-position: 2px -540px}
+button.nettoyer          {background-position: 2px -560px}
+button.parametre         {background-position: 2px -580px}
+button.periode_ajouter   {background-position: 2px -600px}
+button.periode_retirer   {background-position: 2px -620px}
+button.rechercher        {background-position: 2px -640px}
+button.referencer_lien   {background-position: 2px -660px}
+button.retourner         {background-position: 2px -680px}
+button.signaler          {background-position: 2px -700px}
+button.stats             {background-position: 2px -720px}
+button.supprimer         {background-position: 2px -740px}
+button.texte             {background-position: 2px -760px}
+button.user_ajouter      {background-position: 2px -780px}
+button.user_desactiver   {background-position: 2px -800px}
+button.valider           {background-position: 2px -820px}
+button.valider_next      {background-position: 2px -840px}
+button.valider_prev      {background-position: 2px -860px}
+button.voir_photo        {background-position: 2px -880px}
+
+button{width:auto;overflow:visible} /* patch pour IE : voir http://jehiah.cz/archive/button-width-in-ie */
+button:hover,button.hover{background-color:#EEF;color:#D41;cursor:pointer} /* button.hover pour une compatibilité avec AjaxUpload (pour background, car pas mieux pour cursor) */
+*[disabled]{opacity:0.5} /* background-color:#FFF;color:#888;border:1px solid #BBF */
+button[disabled]:hover,button[disabled].hover{cursor:not-allowed}
+button img{width:16px;height:16px}
+
+/* input / select / textarea */
+input[type=file]{position:absolute;top:0;left:0;opacity:0;width:0;height:0} /* on cache ce input[type=file] qui n'est pas stylisable, mais sans "visibility:hidden" susceptible d'être ignoré par les navigateurs (Safari ?) par raison de sécurité */
+input[type=radio],input[type=checkbox],input[type=image] {vertical-align:-2px}
+input[type=text],input[type=number],input[type=password],select,textarea {margin:1px 0;background:#FFF;color:#000;border:1px solid #66F;}
+input[readonly],input[disabled] {color:#666;border:1px solid #666;}
+select[multiple],textarea {vertical-align:middle}
+textarea {white-space:pre-wrap}
+textarea[readonly] {background:#EEE}
+
+/* select multiples remplacés par une liste de checkbox (code plus lourd, mais résultat plus maniable pour l'utilisateur) */
+span.select_multiple {display:inline-block;vertical-align:middle;border:1px solid #66F;height:auto;max-height:10em;width:auto;margin:1px auto;overflow:auto;overflow-x:hidden;font-size:90%;text-align:left}
+span.select_multiple span {display:block;font-weight:bold;font-style:italic;padding-left:2em;background-color:#CCC}
+span.select_multiple label:hover {cursor:pointer}
+span.select_multiple label {display:block;white-space:nowrap;padding-left:1px;padding-right:20px}
+span.select_multiple label.check {color:#FFF;background-color:#88F}
+span.check_multiple {display:inline-block;vertical-align:middle;line-height:20px}
+
+input.invisible{width:1px;height:0;border:none} /* astuce pour avoir un champ invisible sans être de type hidden ou caché ou avoir une longueur nulle, sinon jquery.validate.js l'ignore */
+img.captcha{width:20px;height:20px;background-color:#66F;margin:auto 5px 1px 5px}
+img.captcha:hover{cursor:pointer;background-color:#D41}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Style généraux pour les tableaux                                                                    */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table {margin-left:1ex}
+th, td  {padding:2px 2px;text-align:left;white-space:nowrap}
+span.td {padding:1px 2px;text-align:center;white-space:nowrap}
+table tr {background:#EEF}
+table th {border:1px solid #66F;background:#DDF;font-weight:bold}
+table td, span.td {border:1px solid #66F;} /*vertical-align:top*/
+tr.new{background:#CFC}
+td.new{font-weight:bold}
+th.nu , td.nu {background:#FFF;border:none;text-align:center;height:1.6em}  /* le height évite que la hauteur des lignes varie lors de la modification de leur contenu en ajax */
+/* colorer une ligne au survol */
+table.form tbody tr:hover td {background:#BBF}
+table.form tbody tr:hover td.nu {background:#FFF}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Format des en-têtes de tableaux dont on peut trier les lignes                                       */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.hsort thead th.tablesorter-header     {background:#DDF url(../_img/tablesorter/bg.gif)   no-repeat center right;padding-right:13px;cursor:pointer;vertical-align:middle;text-align:left} 
+table.hsort thead th.tablesorter-headerAsc  {background:#99F url(../_img/tablesorter/desc.gif) no-repeat center right}
+table.hsort thead th.tablesorter-headerDesc {background:#99F url(../_img/tablesorter/asc.gif)  no-repeat center right}
+table.vsort thead th.tablesorter-header     {background:#DDF url(../_img/tablesorter/bg.gif)   no-repeat bottom center;padding-bottom:13px;cursor:pointer;vertical-align:bottom;text-align:center} 
+table.vsort thead th.tablesorter-headerAsc  {background:#99F url(../_img/tablesorter/desc.gif) no-repeat bottom center}
+table.vsort thead th.tablesorter-headerDesc {background:#99F url(../_img/tablesorter/asc.gif)  no-repeat bottom center}
+table.hsort thead th.sorter-false           {background:#DDF;padding-right:2px;cursor:default}
+table.vsort thead th.sorter-false           {background:#DDF;padding-bottom:0px;cursor:default}
+table.hsort thead th.nu                     {background:#FFF;text-align:center}
+table.vsort thead th.nu                     {background:#FFF;text-align:center}
+th.tablesorter-header div {font-weight:bold} /* C'est le plugin tablesorter qui ajoute le div */
+.thfloat-table{margin-left:0} /* Pour le plugin THFloat */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Tableau résultat d'une affectation (professeurs / élèves / matières)                                */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.affectation {font-size:85%;margin:1em}
+table.affectation td{vertical-align:top}
+table.affectation tfoot td {background:#DDF;color:#333}
+table.affectation span.proprio {color:#22B;font-weight:bold;}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Tableau de simulation de calcul des scores, aussi utilisé pour dessiner les cellules d'un tableur.  */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.simulation {border-collapse:separate;border-spacing:3px;empty-cells:hide;text-align:center}
+table.simulation colgroup {margin:auto 10px}
+table.simulation th, table.simulation td {border:1px solid #000;text-align:center}
+table.simulation td.nu {border:none}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Tableau de saisie des notes d'une évaluation                                                        */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.scor_eval th, table.scor_eval td {text-align:center}
+table.scor_eval thead th {vertical-align:bottom}
+table.scor_eval thead td {background:#FFF;border:none}
+table.scor_eval tfoot th {text-align:right;padding-right:1ex;font-style:italic;background:#EEF}
+table.scor_eval tfoot td {}
+table.scor_eval tbody th {white-space:normal;font-weight:normal;text-align:left}
+table.scor_eval tbody td {vertical-align:middle;font-weight:bold;background:#DDF;font-size:90%}
+table.scor_eval th, table.saisir td {padding:0}
+table.scor_eval tbody td img {vertical-align:middle}
+table.scor_eval tbody td input {vertical-align:middle;font-size:0;color:#FFF;margin:0;border:2px solid #FFF}
+table.scor_eval tbody.h td input {width:22px;height:16px}
+table.scor_eval tbody.v td input {width:12px;height:22px}
+/* Pour les codes de notation, défini suivant les préférences de l'établissement : cf actualiser_style() dans class.SessionUser.php */
+table.scor_eval tbody.h td input.AB {background:#FFF url(../_img/note/commun/h/AB.gif) no-repeat center center;}
+table.scor_eval tbody.v td input.AB {background:#FFF url(../_img/note/commun/v/AB.gif) no-repeat center center;}
+table.scor_eval tbody.h td input.DI {background:#FFF url(../_img/note/commun/h/DI.gif) no-repeat center center;}
+table.scor_eval tbody.v td input.DI {background:#FFF url(../_img/note/commun/v/DI.gif) no-repeat center center;}
+table.scor_eval tbody.h td input.NE {background:#FFF url(../_img/note/commun/h/NE.gif) no-repeat center center;}
+table.scor_eval tbody.v td input.NE {background:#FFF url(../_img/note/commun/v/NE.gif) no-repeat center center;}
+table.scor_eval tbody.h td input.NF {background:#FFF url(../_img/note/commun/h/NF.gif) no-repeat center center;}
+table.scor_eval tbody.v td input.NF {background:#FFF url(../_img/note/commun/v/NF.gif) no-repeat center center;}
+table.scor_eval tbody.h td input.NN {background:#FFF url(../_img/note/commun/h/NN.gif) no-repeat center center;}
+table.scor_eval tbody.v td input.NN {background:#FFF url(../_img/note/commun/v/NN.gif) no-repeat center center;}
+table.scor_eval tbody.h td input.NR {background:#FFF url(../_img/note/commun/h/NR.gif) no-repeat center center;}
+table.scor_eval tbody.v td input.NR {background:#FFF url(../_img/note/commun/v/NR.gif) no-repeat center center;}
+table.scor_eval tbody.h td input.PA {background:#FFF url(../_img/note/commun/h/PA.gif) no-repeat center center;}
+table.scor_eval tbody.v td input.PA {background:#FFF url(../_img/note/commun/v/PA.gif) no-repeat center center;}
+table.scor_eval tbody.h td input.X  {background:#FFF url(../_img/note/commun/h/X.gif)  no-repeat center center;}
+table.scor_eval tbody.v td input.X  {background:#FFF url(../_img/note/commun/v/X.gif)  no-repeat center center;}
+#table_saisir_voir tbody td input:focus {border:2px solid #00F}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Tableau d'exploitation des résultats d'une évaluation                                               */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.eval_exploitation thead th {text-align:center}
+table.eval_exploitation tbody th {white-space:normal;font-weight:normal;text-align:left}
+table.eval_exploitation tbody td {vertical-align:middle;background:#EEF;font-size:90%}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Couleur de fond pour indiquer les états d'acquisition                                               */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/* Défini suivant les préférences de l'établissement : cf actualiser_style() dans class.SessionUser.php */
+/*
+table th.A- , table td.A- , div.A- , span.A- , label.A- {background-color:#---}
+*/
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Couleur de fond pour les saisies anciennes                                                          */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+span.prev_date, td.prev_date {background-color:#CCC}
+span.prev_year, td.prev_year {background-color:#AAA}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Format des tableaux de bilans de compétences : .bilan et .bilan_synthese                            */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.bilan, table.bilan_synthese {font-size:85%;margin-top:1em;margin-bottom:1em}
+table.bilan tfoot th, table.bilan tfoot td {background:#DDF;text-align:right}
+table.bilan tfoot td.nu {background:#FFF}
+table.bilan_synthese {margin-top:1em;margin-bottom:1em}
+table.bilan th.domaine {background:#99F}
+table.bilan th.info {width:9px;height:9px;background:#DDF url(../_img/info_mini.gif) no-repeat center center;}
+table.bilan_synthese th, table.bilan_synthese td {padding:0 1px}
+table.bilan_synthese tr.vide td{font-size:0;height:6px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Styles pour les éléments du livret scolaire                                                         */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.livret img {vertical-align:text-bottom}
+table.livret td {white-space:normal;min-width:3em}
+table.livret td , table.livret th {vertical-align:middle}
+table.livret td.eval , table.livret th.eval {background:#96B3D5}
+table.livret td.pos0 , table.livret th.pos0 {text-align:center}
+table.livret td.pos1 , table.livret th.pos1 {background:#E1EEF9;text-align:center}
+table.livret td.pos2 , table.livret th.pos2 {background:#C7E1F5;text-align:center}
+table.livret td.pos3 , table.livret th.pos3 {background:#ACD4F1;text-align:center}
+table.livret td.pos4 , table.livret th.pos4 {background:#91C9ED;text-align:center}
+table.livret td.nu {text-align:left}
+
+h4.eval                 {background:#1595D6;padding:1ex;text-align:center;color:#FFF;font-weight:bold;letter-spacing:0.1em;margin:1ex 0;}
+h4.ap,h4.epi,h4.parcours{background:#E1EEF8;padding:1ex;text-align:left  ;color:#000;font-weight:bold;letter-spacing:0.1em;margin-top:1ex}
+h4.bilan                {background:#ADD44E;padding:1ex;text-align:center;color:#FFF;font-weight:bold;letter-spacing:0.1em;margin:1ex 0;}
+h4.viesco               {background:#F79237;padding:1ex;text-align:center;color:#FFF;font-weight:bold;letter-spacing:0.1em;margin:1ex 0;}
+
+div.eval                   {background:#DBE5F1;padding:1ex} /*inusité, sauf dans la doc via un autre CSS */
+div.ap,div.epi,div.parcours{background:#EEF5FB;padding:1ex}
+div.modaccomp              {background:#96B3D5;padding:1ex;margin:1ex 0;}
+div.bilan                  {background:#ECF5D7;padding:1ex}
+div.viesco                 {background:#FED0A3;padding:1ex}
+
+a.voir_detail{white-space:nowrap}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Format des tableaux à double entrée avec checkbox                                                   */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#autocheckbox thead th {padding:2px 0;text-align:center;vertical-align:bottom;width:18px}
+#autocheckbox tbody th {padding:0 2px;text-align:left;vertical-align:middle;height:18px;font-weight:normal}
+#autocheckbox tbody td {padding:0;text-align:center;vertical-align:middle;height:18px;width:18px}
+/* Les 3 suivants s'appliquent aux [ #autocheckbox tbody td ] et [ table.affectation div ] */
+td.off  , div.off  {background:#BBF}
+td.on   , div.on   {background:#FF0}
+td.load , div.load {background:#FFF no-repeat center center url("data:image/gif;base64,R0lGODlhEAAQALMDAExxuoGdzixZquLq9p223mGJxs7e9rLK5r7O7jhhrpGq2mmNxtbm9qW+5nGVxgAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFAAAPACwAAAAAEAAQAAAEUPDJ+QyjmBo78hzdxnQHgoFgdR2l+aEUi7hvVlJC4k0E8Qg5nUfRawATwgyR0PglPT0KAJAJBDDTKcUaUEizj8LiwfV+w2IH+borpHcYsScCACH5BAUAAA8ALAAAAAAQABAAAARS8Mn5Br13WExFqttjMJfgfZsxho+ZfJPKsC1MjRQAcNOBPDod7+BDBHccIuIn5D18lMICQyBcClIHRVFtRLOPQODBJXijU3FA8ag61WznRMyJAAAh+QQFAAAPACwAAAAAEAAQAAAEUvDJ+USimAp7swRAxT1DBoLVNZTYGU6rh2LsVCzeZDBPcTs5w27gWwA9QkbplpPsKIFA5oDARAMKyoFanVyzBMJji+h6pYpwY2zOpAnr5iTsiQAAIfkEBQAADwAsAAAAABAAEAAABFHwyfkAoJham2dZ1fYICVZ8TjiSpYdSAmuCGEkFQTcNEh4ougHv4QN2hBOcTjKcEAgZAwOjeDYoBmnzUSVcD4hHlrF9PB8HcFi6TCPCywm4EwEAIfkEBQAADwAsAAAAABAAEAAABFHwyflWoZg6e7MMwbMVFwBgChhaj2lSKUi5JyVj70QQ3pQIj8ZO0Uv8BEIC0WMUAHc9yY+COHgGGETVihlgJ9qDlWGYeLPWAbn8+F7XUQrZEwEAIfkEBQAADwAsAAAAABAAEAAABFPwyflCoJgqe7MkxLNZz1JgDahUl2OeU0qsk1vAE5iZFHJ4EwDggfD9PEJh8XDMJIc+oERIYRgyCQFmYL1OElnthGvwDh5ggXhiHZ+zUsngHB97IgAh+QQFAAAPACwAAAAAEAAQAAAET/DJ+QihmDar8kTHsxFdEGAIGFqPYp6fSrkmGmL1xBjetBSPwY7ncfwKQgMxYywAdz3JDzPIAACeQXVyvWa0j4Tg0cVSw+Kxt5dIRyliTwQAIfkECQAADwAsAAAAABAAEAAABFHwyfnQoZgie7NkRsU9BIENYGg9TalQqBFOLfFSYFae3hQEk8Ggp/gBH0KiUTLsPX6UhCCzKGAS0unEUbVOsIIpAPDgFrxf8Zhcda7JzsnYEwEAOw==");} /* ajax_loader */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Format de divers tableaux                                                                           */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table.vm_nug td {vertical-align:middle}
+table.vm_nug td.nu {text-align:left}
+/* Pour rester indépendant des préférences établissements pour les états d'acquisition */
+.br{background-color:#F99}
+.bj{background-color:#FD3}
+.bv{background-color:#9F9}
+.bf{background-color:#8D8} /* A mettre en dernier pour surcharger les précédents */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Format du tableau webmestre présentant les statistiques                                             */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table#statistiques td {text-align:center}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Marqueur invisible pour le tri d'un tableau                                                         */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+table i {display:none}
+table.xdebug-error i {display:inline-block} /* pour éviter une répercussion sur les notifications d'erreurs de Xdebug */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Pour le Livret Scolaire                                                                             */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.liaison_livret {display:inline-block;vertical-align:top;margin-right:2em}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Infobulles                                                                                          */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.ui-tooltip {position:absolute;z-index:9999;border:1px solid #333;border-radius:6px;background:#EEE;color:#222;font-size:12px;padding:0.5em} /* Contenu de l'infobulle ; pas réussi à faire fonctionner font-weight:bold => ajouter en js */
+.ui-helper-hidden , .ui-helper-hidden-accessible {display:none}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Calque de recherche (uniquement le calendrier en fait)                                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#calque{position:absolute;z-index:9999;left:0;top:0;border:1px solid #333;border-radius:6px;background:#EEE;font-size:12px;padding:0.5em;text-align:center}
+#calque h5 {display:block;font-size:120%;color:#33A;letter-spacing:0.1em} /* Titre de calque */
+#calque h6 {margin:0.5em auto;color:#33A;font-size:110%} /* Consigne */
+#calque th,#calque td {text-align:center}
+#calque td.hoy {background-color:#99FF99}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Liste à puce pour l'affichage de l'arborescence des compétences ou du socle                         */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+ul.ul_m1 {font-size:95%}
+ul.ul_m1 li, ul.ul_n1 li {margin:0;padding-left:19px}
+ul.ul_m1 li span:hover {cursor:pointer}
+ul.ul_n1 li span:hover {cursor:pointer}
+li.li_m1 {background:transparent url(../_img/folder/folder_m1.png) no-repeat top left;color:#081}  /* matiere ; socle_palier */
+li.li_m2 {background:transparent url(../_img/folder/folder_m2.png) no-repeat top left;color:#04F}  /* niveau */
+li.li_n1 {background:transparent url(../_img/folder/folder_n1.png) no-repeat top left;color:#F00}  /* referentiel_domaine ; socle_pilier */
+li.li_n2 {background:transparent url(../_img/folder/folder_n2.png) no-repeat top left;color:#D0C}  /* referentiel_theme ; socle_section */
+li.li_n3 {background:transparent url(../_img/folder/folder_n3.png) no-repeat top left;color:#70F}  /* referentiel_item ; socle_entree */
+#zone_matieres_items , #zone_socle_item , #zone_socle2016_composante , #zone_eleve , #zone_ressources {min-width:800px;min-height:3000px;padding-right:20px}  /* pour le fancybox qui ne se redimensionne pas en largeur, et qui n'ajoute pas le scrolling automatiquement en hauteur malgré l'appel 'scrolling' à 'yes' (si modif du contenu sans redimensionnement de la fenêtre) , prévoir un minimum au départ */
+#zone_upload {min-width:600px;min-height:300px}  /* pour le fancybox qui se montre radin en place allouée */
+
+li.li_n1 b{font-weight:normal}
+li.li_n3 b img{margin-right:2px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Pour indiquer la liste des élèves associés à une évaluation de même nom (à mettre après les puces)  */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+span.deja {display:inline-block;width:415px}
+label.deja{display:inline-block;width:400px;margin-left:3px;color:#666}
+span.gradient_pourcent{font-weight:bold}
+span.gradient_outer{display:inline-block;height:0.9em;vertical-align:sub;width:100px;border:1px solid #333;margin-right:1em}
+span.gradient_inner{display:inline-block;height:0.9em;vertical-align:top;background:transparent url(../_img/gradiant.png) repeat-y top left;} /* width fixé plus tard */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Zone de modification d'un référentiel                                                               */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#zone_elaboration_referentiel li, #referentiel_edit {line-height:1.5em}  /* évite que la hauteur des lignes varie lors de la modification de leur contenu en ajax */
+#zone_elaboration_referentiel i.tab {display:inline-block;width:5em}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Affichage de l'item du socle dans la zone de validation d'un item ou d'un pilier                    */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#zone_validation .m1 , #zone_information .m1 {background:transparent url(../_img/folder/folder_m1.png) no-repeat top left;padding-left:19px}
+#zone_validation .n1 , #zone_information .n1 {background:transparent url(../_img/folder/folder_n1.png) no-repeat top left;padding-left:19px}
+#zone_validation .n2 , #zone_information .n2 {background:transparent url(../_img/folder/folder_n2.png) no-repeat top left;padding-left:19px}
+#zone_validation .n3 , #zone_information .n3 {background:transparent url(../_img/folder/folder_n3.png) no-repeat top left;padding-left:19px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Zone d'information des évaluations associées à un item                                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#zone_information {overflow:scroll;white-space:nowrap;margin:1ex;border:1px dotted #66F;background:#EEF;padding:0.5ex} /* height défini dans la page (différent suivant item / pilier) */
+#zone_information #items {margin-top:1ex;font-size:90%}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Liste à puce avec flèches bleues                                                                    */
+/* Liste à puce pour les étapes lors d'un import de fichier                                            */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+ul.puce li  { margin-left:2em;margin-top:2px}
+#step li    { margin-left:2em;color:#777}
+#step li.on {font-weight:bold;color:#000}
+ul.puce li , #step li.on {list-style:url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAICAMAAAD+zz7+AAAARVBMVEUAAACBndSgtd9Lc8NVe8c7Y7R7mNOIoterveNDbcBcgMiSq9uvweRxkc89Zrhois2kueA2WqM+aLuNptiYr905X6wuTYtON3v6AAAAAXRSTlMAQObYZgAAAElJREFUCNdVjIEKgCAMRGduzqlZZvX/n9oFQXpwBw+OR38CTTGPUXVh3RL7I7EBS4lxX86cu1ol9wKo4yaVvqc0YblG1d1mM/oAgSUCQYxehQIAAAAASUVORK5CYII=");} /* puce_li */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Liste ordonnable par drag & drop                                                                    */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#sortable_v , #sortable_v_oui , #sortable_v_non {padding:6px;min-height:30px;background:#EEF}
+#sortable_v li , #sortable_v_oui li , #sortable_v_non li {list-style-type:none;margin:0.5ex;background:#DDF url(../_img/action_deplacer_v.png) no-repeat left;padding:2px 0 2px 16px;border:1px solid #BBF}
+#sortable_h_note , #sortable_h_acquis {padding:6px;background:#EEF}
+#sortable_h_note li , #sortable_h_acquis li {list-style-type:none;display:inline-block;vertical-align:top;margin:0.5ex;background:#DDF url(../_img/action_deplacer_h.png) no-repeat top;padding:16px 2px 0 2px;border:1px solid #BBF}
+#sortable_h_acquis li.colorpicker {background:#FFF;padding:0}
+.sortable {margin:0.5ex;background:#EEF;padding:2px;border:1px solid #CCF}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Élement saisissable / déplaçable                                                                    */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#cadre_statut{background:#FFF url(../_img/action_deplacer_vh.png) no-repeat top right}
+#cadre_photo{background:#FFF url(../_img/action_deplacer_vh.png) no-repeat right}
+#cadre_tactile{background:#FF9 url(../_img/action_deplacer_vh.png) no-repeat bottom right}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Puces pour masquer ou montrer des options                                                           */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+a.puce_plus  {font-weight:normal;padding-left:12px;background:transparent no-repeat left url("data:image/gif;base64,R0lGODlhCQAJALMCAAAAAIiH0rq637u74NHR0dzc3OXl5ezs7PHx8fT09Pn5+f7+/gAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQACgAAACwAAAAACQAJAAAEKHCESYNcOK+5lALeFiwIApTiAqyrmBQFACfTQRDAfUxG7xsBQYUiiAAAOw==");} /* toggle_mini_plus */
+a.puce_moins {font-weight:normal;padding-left:12px;background:transparent no-repeat left url("data:image/gif;base64,R0lGODlhCQAJALO+AAAAAIiH0rq637u74NHR0dzc3OXl5ezs7PHx8fT09Pn5+f7+/gAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQACgAAACwAAAAACQAJAAAEJHCESYNcOK+5lPdbsCAkGS5AmoZJ4brJdBA0fUxGrhuBUFGCCAA7");} /* toggle_mini_moins */
+
+.toggle_plus , .toggle_moins , .toggle_none {display:inline-block;vertical-align:text-top;width:16px;height:16px}
+.toggle_plus  {background:no-repeat center center url("data:image/gif;base64,R0lGODdhEAAQAKEDAAAAAImF0rq63v///ywAAAAAEAAQAAACMFSOmTbt/w6cTkIApn1Yh9lBmxNG34ClajZY69qMTVmdHGuCeK17FCX7tQyK4kFQAAA7");} /* toggle_maxi_plus */
+.toggle_moins {background:no-repeat center center url("data:image/gif;base64,R0lGODdhEAAQAKEDAAAAAImF0rq63v///ywAAAAAEAAQAAACJlSOmTbt/w6cTtJpbwwa5j5YwEiWjVimJweurft+nazRV2Ao+iEUADs=");} /* toggle_maxi_moins */
+.toggle_none  {background:no-repeat center center url("data:image/gif;base64,R0lGODdhEAAQAMIFALW10cTC6Nzc7tzc/t3d/////////////ywAAAAAEAAQAAADNSix3K0kyjkXvdJSAK6enBdcIfVJZTUSXOt2hPa+0Rml2QrCKsnnkQEKJqzpMD2kSeFoLgQJADs=");} /* toggle_maxi_none */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Touche du cadre pour une saisie sur appareils tactiles                                              */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#cadre_tactile span{display:inline-block;width:20px;text-align:center;vertical-align:middle;margin:2px;padding:7px 5px;color:#333;background-color:#EEE;border-radius:3px;border:1px solid #CCCCCC;box-shadow:0px 1px 0px rgba(0, 0, 0, 0.2),0px 0px 0px 2px white inset;text-shadow:0px 1px 0px white;white-space:nowrap}
+#cadre_tactile span:hover{background-color:#CCC;border-color:#AAA}
+#cadre_tactile span.img{background:#EEE url(../_img/sprite_bouton_9.png) 0 20px no-repeat;height:15px}
+#cadre_tactile span.img:hover{background-color:#CCC}
+#cadre_tactile span.annuler   {background-position: 7px  -34px}
+#cadre_tactile span.retourner {background-position: 7px -674px}
+#cadre_tactile span.valider   {background-position: 7px -814px}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Zone affichée pour le choix d'une note à la souris                                                  */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+div#td_souris_container{display:none}
+div.td_souris {font-size:0}
+div.td_souris img {padding:2px;margin:1px;background-color:#FFF}
+div.td_souris img.on {background-color:#FF0}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Zone avec barres de progressions pour des intervalles de dates                                      */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.graph_total  {background-color:#99F;text-align:center;width:100%}
+.graph_partie {background-color:#080;height:3px} /* margin-left et width ajoutés en PHP */
+.graph_erreur {background-color:#A00;height:3px} /* margin-left et width ajoutés en PHP */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Indicateur de robustesse d'un mot de passe                                                          */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#robustesse {border:1px solid #66F;margin:auto 10% auto 1em;background-color:#F99;text-align:center;font-style:italic;white-space:nowrap}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Listes d'utilisateurs ou de matières ou de notes sur plusieurs colonnes                             */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.prof_liste , .matiere_liste , .note_liste {float:left;margin-right:10px;margin-bottom:1em}
+.note_liste img {padding:2px;border:1px solid #139}
+.note_liste img:hover {border-color:#D41}
+ 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Diagramme Highcharts                                                                                */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#div_graphique_synthese      {width: 90%;height:350px;padding:0.5em}
+#div_graphique_brevet        {width: 90%;height:350px;padding:0.5em}
+#div_graphique_chronologique {width: 99%;height: 85% }
+ 
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Vignette photo                                                                                      */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+.photo {float:left;padding:3px;margin:6px;border:1px dashed #77F;text-align:center;min-height:180px} /* 144+36 */
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Message d'un partenaire conventionné ENT                                                            */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+#partenaire_logo    {float:left;margin-bottom:1em;padding-right:1em}
+#partenaire_message {float:left;margin-bottom:1em}
+#partenaire_hr      {clear:both}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Pour la gestion privée (livre d'or, RSS)                                                            */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+form.encadre fieldset{margin:3ex 0.5em 0 0.5em;padding:1em 0.5em 0.25ex;background:#EEF;border:1px solid #66F}
+form.encadre legend{position:absolute;margin-top:-2em;margin-left:15em;padding:0 5px 0 0;background:#EEF;border:1px solid #66F;color:#D74C12}
+form.encadre fieldset.new{background:#CFC}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Colorpicker                                                                                         */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+input.stretch {text-align:center;letter-spacing:2px}
+
+/**
+ * Farbtastic Color Picker 1.2
+ * © 2008 Steven Wittens
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+.farbtastic {
+  position: relative;
+}
+.farbtastic * {
+  position: absolute;
+  cursor: crosshair;
+}
+.farbtastic, .farbtastic .wheel {
+  width: 195px;
+  height: 195px;
+}
+.farbtastic .color, .farbtastic .overlay {
+  top: 47px;
+  left: 47px;
+  width: 101px;
+  height: 101px;
+}
+.farbtastic .wheel {
+  background: url(../_img/colorpicker/wheel.png) no-repeat;
+  width: 195px;
+  height: 195px;
+}
+.farbtastic .overlay {
+  background: url(../_img/colorpicker/mask.png) no-repeat;
+}
+.farbtastic .marker {
+  width: 17px;
+  height: 17px;
+  margin: -8px 0 0 -8px;
+  overflow: hidden; 
+  background: url(../_img/colorpicker/marker.png) no-repeat;
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* fancyBox                                                                                            */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/*!
+ * fancyBox - jQuery Plugin
+ * version: 2.1.4 (Thu, 10 Jan 2013)
+ * @requires jQuery v1.6 or later
+ *
+ * Examples at http://fancyapps.com/fancybox/
+ * License: www.fancyapps.com/fancybox/#license
+ *
+ * Copyright 2012 Janis Skarnelis - janis@fancyapps.com
+ *
+ */
+
+.fancybox-wrap,
+.fancybox-skin,
+.fancybox-outer,
+.fancybox-inner,
+.fancybox-image,
+.fancybox-wrap iframe,
+.fancybox-wrap object,
+.fancybox-nav,
+.fancybox-nav span,
+.fancybox-tmp
+{
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: none;
+  vertical-align: top;
+}
+
+.fancybox-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 8020;
+}
+
+.fancybox-skin {
+  position: relative;
+  background: #fff;
+  color: #444;
+  text-shadow: none;
+  border-radius: 4px;
+}
+
+.fancybox-opened {
+  z-index: 8030;
+}
+
+.fancybox-opened .fancybox-skin {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.fancybox-outer, .fancybox-inner {
+  position: relative;
+}
+
+.fancybox-inner {
+  overflow: hidden;
+}
+
+.fancybox-type-iframe .fancybox-inner {
+  -webkit-overflow-scrolling: touch;
+}
+
+.fancybox-error {
+  color: #444;
+  font: 14px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  margin: 0;
+  padding: 15px;
+  white-space: nowrap;
+}
+
+.fancybox-image, .fancybox-iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.fancybox-image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#fancybox-loading, .fancybox-close, .fancybox-prev span, .fancybox-next span {
+  background-image: url('../_img/fancybox/fancybox_sprite.png');
+}
+
+#fancybox-loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -22px;
+  margin-left: -22px;
+  background-position: 0 -108px;
+  opacity: 0.8;
+  cursor: pointer;
+  z-index: 8060;
+}
+
+#fancybox-loading div {
+  width: 42px;
+  height: 42px;
+  background: url('../_img/fancybox/fancybox_loading.gif') center center no-repeat;
+}
+
+.fancybox-close {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  z-index: 8040;
+}
+
+.fancybox-nav {
+  position: absolute;
+  top: 0;
+  width: 10%; /* ex 40% */
+  height: 100%;
+  cursor: pointer;
+  text-decoration: none;
+  background: transparent url('../_img/fancybox/blank.gif'); /* helps IE */
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  z-index: 8040;
+}
+
+.fancybox-prev {
+  left: 0;
+}
+
+.fancybox-next {
+  right: 20px; /* ex 0 */
+}
+
+.fancybox-nav span {
+  position: absolute;
+  top: 50%;
+  width: 36px;
+  height: 34px;
+  margin-top: -18px;
+  cursor: pointer;
+  z-index: 8040;
+  visibility: hidden;
+}
+
+.fancybox-prev span {
+  left: 10px;
+  background-position: 0 -36px;
+}
+
+.fancybox-next span {
+  right: 10px;
+  background-position: 0 -72px;
+}
+
+.fancybox-nav:hover span {
+  visibility: visible;
+}
+
+.fancybox-tmp {
+  position: absolute;
+  top: -99999px;
+  left: -99999px;
+  visibility: hidden;
+  max-width: 99999px;
+  max-height: 99999px;
+  overflow: visible !important;
+}
+
+/* Overlay helper */
+
+.fancybox-lock {
+  overflow: hidden;
+}
+
+.fancybox-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  display: none;
+  z-index: 8010;
+  background: url('../_img/fancybox/fancybox_overlay.png');
+}
+
+.fancybox-overlay-fixed {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.fancybox-lock .fancybox-overlay {
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+/* Title helper */
+
+.fancybox-title {
+  visibility: hidden;
+  font: normal 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
+  position: relative;
+  text-shadow: none;
+  z-index: 8050;
+}
+
+.fancybox-opened .fancybox-title {
+  visibility: visible;
+}
+
+.fancybox-title-float-wrap {
+  position: absolute;
+  bottom: 0;
+  right: 50%;
+  margin-bottom: -35px;
+  z-index: 8050;
+  text-align: center;
+}
+
+.fancybox-title-float-wrap .child {
+  display: inline-block;
+  margin-right: -100%;
+  padding: 2px 20px;
+  background: transparent; /* Fallback for web browsers that doesn't support RGBa */
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: 15px;
+  text-shadow: 0 1px 2px #222;
+  color: #FFF;
+  font-weight: bold;
+  line-height: 24px;
+  white-space: nowrap;
+}
+
+.fancybox-title-outside-wrap {
+  position: relative;
+  margin-top: 10px;
+  color: #fff;
+}
+
+.fancybox-title-inside-wrap {
+  padding-top: 10px;
+}
+
+.fancybox-title-over-wrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  color: #fff;
+  padding: 10px;
+  background: #000;
+  background: rgba(0, 0, 0, .8);
+}
+
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+/* Impromptu                                                                                           */
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+/*! jQuery-Impromptu - v5.2.3 - 2014-03-09
+ * http://trentrichardson.com/Impromptu
+ * Copyright (c) 2014 Trent Richardson; Licensed MIT */
+
+.jqifade{
+  position: absolute;
+  background-color: #000; /*modifié*/
+}
+div.jqi{
+  width: 600px; /*modifié*/
+  max-width:90%;
+  font-family: "arial","helvetica","nimbus sans l","liberation sans","freesans","garuda",sans-serif; /*modifié*/
+  position: absolute;
+  background-color: #ffffff;
+  /* font-size: 11px; */ /* retiré */
+  text-align: left;
+  border: solid 1px #eeeeee;
+  border-radius: 6px; /* -moz-border-radius et -webkit-border-radius retirés */
+  padding: 7px;
+}
+div.jqi .jqicontainer{
+}
+div.jqi .jqiclose{
+  display: none; /*ajouté*/
+  position: absolute;
+  top: 4px;
+  right: -2px;
+  width: 18px;
+  cursor: default;
+  color: #bbbbbb;
+  font-weight: bold;
+}
+div.jqi .jqistate{
+  background-color: #fff;
+}
+div.jqi .jqititle{
+  padding: 5px 10px;
+  font-size: 105%; /*modifié*/
+  font-weight: bold; /*ajouté*/
+  color: #C00; /*ajouté*/
+  font-size: 16px;
+  line-height: 20px;
+  border-bottom: solid 1px #eeeeee;
+}
+div.jqi .jqimessage{ 
+  padding: 10px;
+  font-size: 95%; /*ajouté*/
+  font-weight: bold; /*ajouté*/
+  line-height: 1.8em; /* modifié */
+  color: #C00; /*modifié*/
+}
+div.jqi .jqibuttons{ 
+  text-align: right;
+  margin: 0 -7px -7px -7px;
+  border-top: solid 1px #e4e4e4;
+  background-color: #f4f4f4;
+  border-radius: 0 0 6px 6px; /* -moz-border-radius et -webkit-border-radius retirés */
+}
+div.jqi .jqibuttons button{ 
+  margin: 0;
+  padding: 15px 20px;
+  background-color: transparent;
+  font-weight: normal;
+  border: none;
+  border-left: solid 1px #e4e4e4;
+  color: #777;
+  font-weight: bold;
+  /* font-size: 12px; */ /* retiré */
+  background: none; /*ajouté*/
+}
+
+div.jqibuttons{
+  padding: 0 1px; /*ajouté*/
+}
+
+div.jqi .jqibuttons button.jqidefaultbutton{
+  color: #489afe;
+}
+div.jqi .jqibuttons button:hover,
+div.jqi .jqibuttons button:focus{
+  color: #287ade;
+  outline: none;
+  background-color: #ddf; /*ajouté*/
+}
+.jqiwarning .jqi .jqibuttons{ 
+  background-color: #FF0; /*modifié*/
+}
+
+/* sub states */
+div.jqi .jqiparentstate::after{ 
+  background-color: #777;
+  opacity: 0.6;
+  /*filter: alpha(opacity=60); */ /* retiré : balise propriétaire pour IE */
+  content: '';
+  position: absolute;
+  top:0;left:0;bottom:0;right:0;
+  border-radius: 6px; /* -moz-border-radius et -webkit-border-radius retirés */
+}
+div.jqi .jqisubstate{
+  position: absolute;
+  top:0;
+  left: 20%;
+  width: 60%;
+  padding: 7px;
+  border: solid 1px #eeeeee;
+  border-top: none;
+  border-radius: 0 0 6px 6px; /* -moz-border-radius et -webkit-border-radius retirés */
+}
+div.jqi .jqisubstate .jqibuttons button{
+  padding: 10px 18px;
+}
+
+/* arrows for tooltips/tours */
+.jqi .jqiarrow{ position: absolute; height: 0; width:0; line-height: 0; font-size: 0; border: solid 10px transparent;}
+
+.jqi .jqiarrowtl{ left: 10px;  top: -20px; border-bottom-color: #ffffff; }
+.jqi .jqiarrowtc{ left: 50%;   top: -20px; border-bottom-color: #ffffff; margin-left: -10px; }
+.jqi .jqiarrowtr{ right: 10px; top: -20px; border-bottom-color: #ffffff; }
+
+.jqi .jqiarrowbl{ left: 10px;  bottom: -20px; border-top-color: #ffffff; }
+.jqi .jqiarrowbc{ left: 50%;   bottom: -20px; border-top-color: #ffffff; margin-left: -10px; }
+.jqi .jqiarrowbr{ right: 10px; bottom: -20px; border-top-color: #ffffff; }
+
+.jqi .jqiarrowlt{ left: -20px; top: 10px;    border-right-color: #ffffff; }
+.jqi .jqiarrowlm{ left: -20px; top: 50%;     border-right-color: #ffffff; margin-top: -10px; }
+.jqi .jqiarrowlb{ left: -20px; bottom: 10px; border-right-color: #ffffff; }
+
+.jqi .jqiarrowrt{ right: -20px; top: 10px;    border-left-color: #ffffff; }
+.jqi .jqiarrowrm{ right: -20px; top: 50%;     border-left-color: #ffffff; margin-top: -10px; }
+.jqi .jqiarrowrb{ right: -20px; bottom: 10px; border-left-color: #ffffff; }

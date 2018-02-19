@@ -1,0 +1,61 @@
+﻿================================================================================
+Librairie : FPDF                        Version : 1.8.1
+================================================================================
+
+FPDF est une classe PHP qui permet de produire des fichiers PDF.
+
+Seule la classe est présente dans SACoche.
+Pour infos documentations et génération de fonts : http://www.fpdf.org/
+
+Pas de solution simple pour écrire du texte en arabe...
+Il faudra peut-être se tourner vers une de ces solutions plus complètes :
+TODO http://www.mpdf1.com/mpdf/index.php
+TODO http://www.tcpdf.org/index.php
+
+
+PDF_Label est une extension de classe de FPDF pour générer un fichier d'étiquettes.
+http://www.fpdf.org/fr/script/script29.php
+Ligne n°87 "$this->SetFont('Arial');" commentée.
+
+Fichiers de polices Arial incorporés dans /font/ en n'ayant conservé que les caractères de l'encodage cp1252
+Pour infos : http://www.fpdf.org/fr/tutorial/tuto7.htm
+
+D'autres extensions de FPDF sont aussi utilisées par SACoche (parfois modifiées, parfois partiellement) :
+http://www.fpdf.org/fr/script/script18.php  Pour optimiser la gestion de la mémoire.
+http://www.fpdf.org/fr/script/script31.php  Pour écrire un texte tourné.
+http://www.fpdf.org/fr/script/script62.php  Pour ajuster un texte à la taille d'une cellule.
+http://www.fpdf.org/fr/script/script49.php  Pour savoir le nombre de lignes requises pour écrire un texte.
+http://www.fpdf.org/fr/script/script45.php  Pour afficher des images chargées en mémoire sans avoir besoin de passer par un fichier temporaire.
+
+D'autres extensions de FPDF intéressantes mais non utilisées :
+http://www.fpdf.org/fr/script/script6.php   Pour tracer un cercle (ou une ellipse).
+http://www.fpdf.org/en/script/script37.php  Pour protéger le PDF en écriture -> fonctionne si on crée un PDF de toutes pièces, mais pas si on ajoute du contenu sur un PDF existant.
+
+
+========================================
+Modifications apportées
+========================================
+
+
+Attention : à partir de FPDF 1.7 il faut remplacer 4x dans le script18 "DefPageFormat" par "DefPageSize" !
+http://www.fpdf.org/phorum/read.php?f=1&i=56024&t=56024
+
+Attention : remplacer "__construct()" par "FPDF()" pour des histoires de classes dépendantes.
+            ==> Non, plus possible en PHP 7, sinon "Deprecated: Methods with the same name as their class will not be constructors in a future version of PHP; FPDF has a deprecated constructor ..."
+
+Attention : la fonction get_defined_vars() pouvant être désactivée, la fonction _loadfont() a été modifiée.
+http://www.fpdf.org/?go=forum&i=56830&t=56830
+
+Attention : remplacer dans FPDF 1.8
+  $n = $this->PageInfo[1]['n'];
+par
+  $n = isset($this->PageInfo[1]['n']) ? $this->PageInfo[1]['n'] : 3 ;
+sinon erreur de variable indéfinie rencontrée :
+http://www.fpdf.org/phorum/read.php?f=1&i=66808&t=66808
+
+Suite à une erreur sur un serveur dans PDF_Label.php
+$this->_put('/ViewerPreferences <</PrintScaling /None>>');
+a été remplacé par
+parent::_put('/ViewerPreferences <</PrintScaling /None>>');
+mais sans savoir si cela corrigeait qq chose,
+puis tout simplement commenté vu son peu d'importance.

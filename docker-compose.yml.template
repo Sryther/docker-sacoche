@@ -1,0 +1,19 @@
+version: "2"
+services:
+  web:
+    build: .
+    expose:
+      - 80
+    links:
+      - mysql:mysql
+    restart: always
+  mysql:
+    image: mysql:5.5
+    environment:
+      - MYSQL_ROOT_PASSWORD=sacoche
+      - MYSQL_DATABASE=sacoche
+      - MYSQL_USER=sacoche
+      - MYSQL_PASSWORD=sacoche
+    expose:
+      - 3306
+    restart: always
